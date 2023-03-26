@@ -4,14 +4,16 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-	font-family: $ff-title;
+	font-family: $ff;
 	font-weight: $fw-bold;
 	line-height: $lh-title;
-	margin: 0 0 1rem
+	margin: 0;
+	text-align: center;
 }
 
 h1, .h1 {
 	font-size: 32px;
+	margin-bottom: 30px;
 
 	@media all and (min-width: $lg) {
 		font-size: 36px
