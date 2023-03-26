@@ -78,7 +78,8 @@ const processInputChange = e => {
 }
 
 /**
- * Filter our data using input values and offset.
+ * Filter our data using input values and offset
+ * 
  */
 const processFilters = ( scrolling = 0 ) => {
 	if( ! scrolling ) offset = 0
