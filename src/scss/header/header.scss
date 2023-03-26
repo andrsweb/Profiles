@@ -1,0 +1,25 @@
+.header {
+	padding: 20px 0;
+	background-color: lightblue;
+}
+
+form {}
+
+fieldset {
+	display: flex;
+	justify-content: center;
+	border: 0;
+}
+
+input {
+	border: 0;
+	border-style: none;
+	border-radius: 10px;
+	font-family: $ff;
+	margin-right: 20px;
+	padding: 5px 0 5px 10px;
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
