@@ -1,5 +1,5 @@
 .header {
-	padding: 20px 0;
+	padding: 10px 0;
 	background-color: $accent;
 	position: fixed;
 	width: 100%;
@@ -22,9 +22,23 @@
 	}
 
 	&-tel {
+		display: flex;
+		flex-direction: column;
 		font-family: $ff;
 		font-size: 25px;
 		color: $white;
+
+		.time {
+			font-size: 12px;
+			line-height: 1;
+			text-align: center;
+		}
+
+		.master {
+			font-size: 15px;
+			text-align: center;
+			line-height: 1;
+		}
 	}
 }
 
