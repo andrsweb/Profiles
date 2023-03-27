@@ -1,4 +1,4 @@
-const STEP			= 2
+const STEP			= 1
 let data			= [],
 	filteredData	= [],
 	filterTown		= '',
@@ -115,7 +115,7 @@ const generateCards = scrolling => {
 	if( ! filteredData.length ){
 		structure = scrolling ? '' : 'Ничего не найдено'
 	}	else {
-		filteredData.forEach( ( { town, dist, metro, tech, name, src } ) => {
+		filteredData.forEach( ( { town, dist, metro, tech, name, src, skill, address, about } ) => {
 			structure += `<li class="card">
 				<div class="card-inner">
 					<div class="card-name"><span class="first">ФИО:</span><span class="second">${ name }</span></div>
@@ -123,9 +123,12 @@ const generateCards = scrolling => {
 					<div class="card-dist"><span class="first">Район:</span><span class="second">${ dist }</span></div>
 					<div class="card-metro"><span class="first">Метро:</span><span class="second">${ metro }</span></div>
 					<div class="card-tech"><span class="first">Техника:</span><span class="second">${ tech }</span></div>
+					<div class="card-tech"><span class="first">Адрес проживания:</span><span class="second">${ address }</span></div>
+					<div class="card-tech"><span class="first">Что умею делать:</span><span class="second">${ skill }</span></div>
+					<div class="card-tech"><span class="first">Обо мне:</span><span class="second">${ about }</span></div>
 				</div>
 				<div class="card-photo">
-					<img src="${ src }" width="200" height="200" alt="">
+					<img src="${ src }" width="300" height="300" alt="">
 				</div>
 			</li>`
 		} )

@@ -1,3 +1,7 @@
+.hero {
+	padding-top: 50px;
+}
+
 #results {
 	margin: 50px 0;
 	list-style: decimal;
@@ -8,22 +12,34 @@
 
 .card {
 	width: 100%;
-	max-width: 800px;
+	max-width: 1200px;
 	display: flex;
+	flex-direction: column;
 	padding: 30px;
 	border: 3px solid $accent;
+	border-style: dotted;
 	border-radius: 10px;
 	margin-bottom: 20px;
 	font-family: $ff;
-	animation: show 2s ease forwards;
 
-	@keyframes show {
-		0% {
-			border-color: #000;
-		}
+	@media all and (min-width: $lg) {
+		padding: 30px;
+		flex-direction: row;
+	}
 
-		100% {
-			border-color: $accent;
+	&:last-child {
+		animation: fade 2s ease forwards;
+
+		@keyframes fade  {
+			0% {
+				filter: grayscale( 100% );
+				opacity: 0;
+			}
+	
+			100% {
+				filter: grayscale( 0 );
+				opacity: 1;
+			}
 		}
 	}
 
@@ -32,8 +48,14 @@
 	}
 
 	&-name, &-town, &-dist, &-metro, &-tech {
-		font-size: 25px;
-		margin-bottom: 20px;
+		font-size: 20px;
+		margin-bottom: 10px;
+		padding-right: 10px;
+
+		@media all and (min-width: $lg) {
+			font-size: 25px;
+			margin-bottom: 20px;
+		}
 
 		&:last-child {
 			margin-bottom: 0;
@@ -43,24 +65,35 @@
 			font-family: $ff;
 			font-weight: $fw-medium;
 			display: inline-block;
-			width: 100px;
+			width: 100%;
+
+			@media all and (min-width: $lg) {
+				width: 240px;
+			}
 		}
 
 		.second {
 			text-align: right;
-			margin-left: 30px;
+
+			@media all and (min-width: $lg) {
+				margin-left: 30px;
+			}
 		}
 	}
 
 	&-photo {
-		width: 30%;
+		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		@media all and (min-width: $lg) {
+			width: 30%;
+		}
 		
 		img {
-			width: 200px;
-			height: 200px;
+			width: 300px;
+			height: 300px;
 			object-fit: cover;
 			padding: 10px;
 			border: 1px solid $accent;
@@ -69,6 +102,55 @@
 	}
 
 	&-inner {
-		width: 70%;
+		width: 100%;
+		margin-bottom: 20px;
+
+		@media all and (min-width: $lg) {
+			width: 70%;
+			margin-bottom: 0;
+		}
+	}
+}
+
+fieldset {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 0;
+
+	@media all and (min-width: $xl) {
+		font-size: 25px;
+		flex-direction: row;
+	}
+}
+
+input {
+	border: 0;
+	border-style: none;
+	border-radius: 10px;
+	font-family: $ff;
+	font-size: 20px;
+	margin-bottom: 10px;
+	padding: 15px 0 15px 10px;
+	background-color: rgb(224, 213, 213);
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&::placeholder {
+		font-family: $ff;
+		font-size: 20px;
+		opacity: 1;
+	}
+
+	@media all and (min-width: $xl) {
+		margin-bottom: 0;
+		margin-right: 20px;
+
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 }

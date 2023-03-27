@@ -13,10 +13,11 @@ h6, .h6 {
 
 h1, .h1 {
 	font-size: 32px;
-	margin: 50px 0;
+	margin: 20px 0;
 
 	@media all and (min-width: $lg) {
-		font-size: 36px
+		font-size: 36px;
+		margin: 50px 0;
 	}
 }
 
