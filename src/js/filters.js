@@ -1,10 +1,11 @@
-const STEP			= 5
+const STEP			= 2
 let data			= [],
 	filteredData	= [],
 	filterTown		= '',
 	filterDist		= '',
 	filterMetro		= '',
 	filterTech		= '',
+	filterName		= '',
 	offset			= 0
 
 document.addEventListener( 'DOMContentLoaded', () => {
@@ -32,7 +33,7 @@ const getAllData = async () => {
 	let res
 
 	try {
-		res = await fetch( '../src/data/data.json' )
+		res = await fetch( 'data/data.json' )
 	}	catch( err ){
 		console.error( `Error: ${ err.message }` )
 		return
@@ -84,7 +85,7 @@ const processInputChange = e => {
 const processFilters = ( scrolling = 0 ) => {
 	if( ! scrolling ) offset = 0
 
-	if( ! filterTown && ! filterDist && ! filterMetro && ! filterTech ){
+	if( ! filterTown && ! filterDist && ! filterMetro && ! filterTech && ! filterName ){
 		filteredData = data.slice( offset, offset + STEP )
 	}	else {
 		filteredData = data.filter( ( { town, dist, metro, tech } ) => {
@@ -114,12 +115,18 @@ const generateCards = scrolling => {
 	if( ! filteredData.length ){
 		structure = scrolling ? '' : 'Ничего не найдено'
 	}	else {
-		filteredData.forEach( ( { town, dist, metro, tech } ) => {
+		filteredData.forEach( ( { town, dist, metro, tech, name, src } ) => {
 			structure += `<li class="card">
-				<span class="card-town">${ town }</span>
-				<span class="card-dist">${ dist }</span>
-				<span class="card-metro">${ metro }</span>
-				<span class="card-tech">${ tech }</span>
+				<div class="card-inner">
+					<div class="card-name"><span class="first">ФИО:</span><span class="second">${ name }</span></div>
+					<div class="card-town"><span class="first">Город:</span><span class="second">${ town }</span></div>
+					<div class="card-dist"><span class="first">Район:</span><span class="second">${ dist }</span></div>
+					<div class="card-metro"><span class="first">Метро:</span><span class="second">${ metro }</span></div>
+					<div class="card-tech"><span class="first">Техника:</span><span class="second">${ tech }</span></div>
+				</div>
+				<div class="card-photo">
+					<img src="${ src }" width="200" height="200" alt="">
+				</div>
 			</li>`
 		} )
 	}
@@ -137,7 +144,7 @@ window.addEventListener( 'scroll', () => {
 		! results ||
 		results.classList.contains( 'filtering' ) ||
 		offset > data.length ||
-		scrolled < getCoords( results ).bottom - window.innerHeight + 200
+		scrolled < getCoords( results ).bottom - window.innerHeight + 40
 	) return
 
 	results.classList.add( 'filtering' )
