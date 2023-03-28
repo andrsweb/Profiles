@@ -29,7 +29,7 @@ export const showPopup = () => {
 
 		if ( target.className && target.classList.contains( 'popup-wrapper' ) ) {
 			popupWrapper.classList.remove( 'showed' )
-			enableBodyScroll( getTargetElement(), { reserveScrollBarGap: true } )
+			enableBodyScroll( getTargetElement() )
 		}
 	} )
 }

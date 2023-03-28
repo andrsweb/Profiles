@@ -1,4 +1,5 @@
 import { showPopup } from "./popup"
+import { showCardPopup } from "./card-popup"
 
 const STEP			= 1
 let data			= [],
@@ -153,7 +154,7 @@ const generateCards = scrolling => {
 						<a href="tel:${ tel }" class="master-tel">
 							Телефон
 						</a>
-						<button class="popup-button">
+						<button class="card-button">
 								Оставить заявку
 						</button>
 					</div>
@@ -183,11 +184,13 @@ const generateCards = scrolling => {
 		results.innerHTML += structure
 		showText()
 		showPopup()
+		showCardPopup()
 	} 
 	else {
 		results.innerHTML = structure
 		showText()
 		showPopup()
+		showCardPopup()
 	} 
 }
 

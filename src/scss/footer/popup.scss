@@ -1,4 +1,4 @@
-.popup-wrapper {
+.popup-wrapper, .card-popup-wrapper {
 	position:fixed;
 	display:none;
 	align-items:center;
@@ -10,23 +10,12 @@
 	z-index: 200;
 	overflow-y: auto;
 	padding: 20px;
-	animation: anim 1s ease forwards;
-
-	@keyframes anim {
-		0% {
-			background-color: none;
-		}
-
-		100% {
-			background-color: rgba(17, 17, 17, 0.87);
-		}
-	}
 
 	&.showed {
 		display: flex;
 	}
 
-	.popup {
+	.popup, .card-popup {
 		position: relative;
 		width: 100%;
 		display: flex;
@@ -37,20 +26,6 @@
 		background-color: $accent;
 		max-width: 400px;
 		margin: auto 0;
-
-		animation: scale 1s ease forwards;
-
-	@keyframes scale {
-		0% {
-			scale: 0;
-			transform: rotate( 180deg );
-		}
-
-		100% {
-			scale: 1;
-			transform: rotate( 0 );
-		}
-	}
 
 		@media all and (min-width: $lg) {
 			padding: 50px;
@@ -119,4 +94,64 @@
 	color: $white;
 	text-align: center;
 	margin-top: 5px;
+}
+
+.popup-wrapper {
+	animation: anim1 1s ease forwards;
+
+	@keyframes anim1 {
+		0% {
+			background-color: none;
+		}
+
+		100% {
+			background-color: rgba(17, 17, 17, 0.932);
+		}
+	}
+}
+
+.card-popup-wrapper {
+	animation: anim2 1s ease forwards;
+
+	@keyframes anim2 {
+		0% {
+			background-color: none;
+		}
+
+		100% {
+			background-color: rgba(17, 17, 17, 0.932);
+		}
+	}
+}
+
+.popup {
+	animation: scale1 1s ease forwards;
+
+		@keyframes scale1 {
+			0% {
+				scale: 0;
+				transform: rotate( 180deg );
+			}
+
+			100% {
+				scale: 1;
+				transform: rotate( 0 );
+			}
+		}
+}
+
+.card-popup {
+	animation: scale2 1s ease forwards;
+
+		@keyframes scale2 {
+			0% {
+				scale: 0;
+				transform: rotate( 180deg );
+			}
+
+			100% {
+				scale: 1;
+				transform: rotate( 0 );
+			}
+		}
 }

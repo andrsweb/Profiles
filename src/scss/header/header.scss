@@ -2,11 +2,11 @@
 	padding: 10px 0;
 	background-color: $accent;
 	position: fixed;
-	width: 100vw;
+	width: 100%;
 	left: 0;
 	top: 0;
 	z-index: 100;
-box-shadow: 0px 0px 5px $black;
+	box-shadow: 0px 0px 5px $black;
 
 	&-wrapper {
 		display: flex;
@@ -59,7 +59,7 @@ box-shadow: 0px 0px 5px $black;
 	}
 }
 
-.popup-button {
+.popup-button, .card-button {
 	border: 0;
 	border-style: none;
 	padding: 10px 20px;
@@ -75,7 +75,7 @@ box-shadow: 0px 0px 5px $black;
 	}
 }
 
-.hero .popup-button, .master-tel {
+.hero .popup-button, .card-button, .master-tel {
 	border: 1px solid $accent;
 	padding: 10px 20px;
 	font-size: 18px;

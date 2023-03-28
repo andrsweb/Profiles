@@ -169,11 +169,11 @@ input {
 		margin-bottom: 0;
 	}
 
-	&::placeholder {
-		font-family: $ff;
-		font-size: 20px;
-		opacity: 1;
-	}
+	// &::placeholder {
+	// 	font-family: $ff;
+	// 	font-size: 20px;
+	// 	opacity: 1;
+	// }
 
 	@media all and (min-width: $xl) {
 		margin-bottom: 0;
