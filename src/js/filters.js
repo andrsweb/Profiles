@@ -1,3 +1,5 @@
+import { showPopup } from "./popup"
+
 const STEP			= 1
 let data			= [],
 	filteredData	= [],
@@ -115,7 +117,7 @@ const generateCards = scrolling => {
 	if( ! filteredData.length ){
 		structure = scrolling ? '' : 'Ничего не найдено'
 	}	else {
-		filteredData.forEach( ( { town, dist, metro, tech, name, src, skill, address, about } ) => {
+		filteredData.forEach( ( { town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp } ) => {
 			structure += `<li class="card">
 				<div class="card-inner">
 					<div class="card-name"><span class="first">ФИО:</span><span class="second">${ name }</span></div>
@@ -125,17 +127,68 @@ const generateCards = scrolling => {
 					<div class="card-tech"><span class="first">Техника:</span><span class="second">${ tech }</span></div>
 					<div class="card-tech"><span class="first">Адрес проживания:</span><span class="second">${ address }</span></div>
 					<div class="card-tech"><span class="first">Что умею делать:</span><span class="second">${ skill }</span></div>
-					<div class="card-tech"><span class="first">Обо мне:</span><span class="second">${ about }</span></div>
+					<div class="card-tech"><span class="first">Опыт:</span><span class="second">${ exp } </span></div>
+					<div class="card-tech"><span class="first">Гарантия:</span><span class="second">1 мес. </span></div>
+					<div class="card-tech"><span class="first">Выезд:</span><span class="second">Да </span></div>
+					<div class="card-tech"><span class="first">Дни работы:</span><span class="second">Понедельник-воскресенье </span></div>
+					<div class="card-tech"><span class="first">Время работы:</span><span class="second">8:00 - 21:00 </span></div>
+					<div class="card-about"><span class="first">Обо мне:</span><span class="second on">Показать</span>
+					<div class="card-info">
+						<div class="card-info-inner">
+							${ about }
+						</div>
+					</div>
+					</div>
 				</div>
 				<div class="card-photo">
-					<img src="${ src }" width="300" height="300" alt="">
+					<img class="card-avatar" src="${ src }" width="300" height="300" alt="">
+					<p class="master-rate">
+						Рейтинг: ${ rate }
+						<img src="img/cards/star.png" width="15" height="15" alt="">
+					</p>
+					<p class="done">
+						Выполнено работ: ${ done }
+					</p>
+					<div class="card-button-wrapper">
+						<a href="tel:${ tel }" class="master-tel">
+							Телефон
+						</a>
+						<button class="popup-button">
+								Оставить заявку
+						</button>
+					</div>
 				</div>
 			</li>`
 		} )
 	}
 
-	if( scrolling ) results.innerHTML += structure
-	else results.innerHTML = structure
+	const showText = () => {
+		const hiddenTexts = document.querySelectorAll( '.card-about' )
+		const changeText = document.querySelector( '.second.on' )
+	
+		hiddenTexts.forEach( text => {
+			text.addEventListener( 'click', () => {
+				if( ! text.classList.contains( 'opened' ) ) {
+					text.classList.add( 'opened' )
+					changeText.innerHTML ="Скрыть"
+				} else {
+					text.classList.remove( 'opened' )
+					changeText.innerHTML ="Показать"
+				}
+			} )
+		} )
+	}
+
+	if( scrolling ) {
+		results.innerHTML += structure
+		showText()
+		showPopup()
+	} 
+	else {
+		results.innerHTML = structure
+		showText()
+		showPopup()
+	} 
 }
 
 window.addEventListener( 'scroll', () => {

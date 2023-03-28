@@ -47,14 +47,14 @@
 		margin-bottom: 0
 	}
 
-	&-name, &-town, &-dist, &-metro, &-tech {
+	&-name, &-town, &-dist, &-metro, &-tech, &-about {
 		font-size: 20px;
 		margin-bottom: 10px;
 		padding-right: 10px;
 
 		@media all and (min-width: $lg) {
-			font-size: 25px;
-			margin-bottom: 20px;
+			font-size: 18px;
+			margin-bottom: 5px;
 		}
 
 		&:last-child {
@@ -78,22 +78,27 @@
 			@media all and (min-width: $lg) {
 				margin-left: 30px;
 			}
+
+			&.on {
+				color: $accent;
+			}
 		}
 	}
 
 	&-photo {
 		width: 100%;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		justify-content: flex-start;
 		align-items: center;
 
 		@media all and (min-width: $lg) {
 			width: 30%;
 		}
 		
-		img {
-			width: 300px;
-			height: 300px;
+		.card-avatar {
+			width: 200px;
+			height: 200px;
 			object-fit: cover;
 			padding: 10px;
 			border: 1px solid $accent;
@@ -112,16 +117,41 @@
 	}
 }
 
+.master-rate {
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+.master-tel {
+	color: $black;
+	border-radius: 10px;
+	margin-right: 5px;
+	font-size: 18px;
+	display: flex;
+	align-items: center;
+}
+
+.card-button-wrapper {
+	display: flex;
+	margin-top: 30px;
+}
+
 fieldset {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	border: 0;
+	padding-left: 0;
+	padding-right: 0;
+	margin-top: 20px;
 
 	@media all and (min-width: $xl) {
 		font-size: 25px;
 		flex-direction: row;
+		justify-content: space-between;
 	}
 }
 
@@ -151,6 +181,39 @@ input {
 
 		&:last-child {
 			margin-right: 0;
+		}
+	}
+}
+
+.show {
+	color: $accent;
+	transition: opacity ease $tr;
+
+	&:hover {
+		opacity: 0.75;
+	}
+}
+
+.card-about {
+	cursor: pointer;
+	transition: opacity ease $tr;
+
+	.card-info {
+		opacity: 0;
+		height: 0;
+		visibility: hidden;
+		transition: height ease $tr;
+	}
+
+	&:hover {
+		opacity: 0.75;
+	}
+
+	&.opened {
+		.card-info {
+			opacity: 1;
+			height: auto;
+			visibility: visible;
 		}
 	}
 }
