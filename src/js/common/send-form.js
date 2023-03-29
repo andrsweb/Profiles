@@ -1,23 +1,26 @@
 document.addEventListener( 'DOMContentLoaded', () => {
 	'use strict'
 
-	submitForm()
+	submitForm( '.form' )
+	submitForm( '.card-form' )
 } )
 
-const submitForm = () => {
-    const form         = document.querySelector( '.form' )
+const submitForm = ( selector ) => {
+    const form         = document.querySelector( selector )
     const formResponse = form.querySelector( '.form-response' )
 
     form.addEventListener( 'submit', e => {
 
         e.preventDefault()
-
-        const request = new XMLHttpRequest()
-
+		const request		= new XMLHttpRequest()
         request.open( 'post', 'send-form.php', true )
 
-        const formData = new FormData( form )
+		const formResponse	= form.querySelector( '.form-response' ),
+		
+		formData		= new FormData( form ),
+		formType		= form.dataset.type
 
+		formData.append( 'func', formType )
         formResponse.classList.remove( [ 'success', 'error' ] )
         formResponse.textContent = 'Обработка...'
         request.addEventListener( 'load', () => {

@@ -122,17 +122,27 @@ const generateCards = scrolling => {
 			structure += `<li class="card">
 				<div class="card-inner">
 					<div class="card-name"><span class="first">ФИО:</span><span class="second">${ name }</span></div>
-					<div class="card-town"><span class="first">Город:</span><span class="second">${ town }</span></div>
-					<div class="card-dist"><span class="first">Район:</span><span class="second">${ dist }</span></div>
-					<div class="card-metro"><span class="first">Метро:</span><span class="second">${ metro }</span></div>
+					<div class="card-tech add">
+						<div class="span-wrapper-top"><span class="first-town">Город:</span><span class="second-town">${ town }</span></div>
+						<div class="span-wrapper-top"><span class="first-dist">Район:</span><span class="second-dist">${ dist }</span></div>
+						<div class="span-wrapper-top"><span class="first-metro">Метро:</span><span class="second-metro">${ metro }</span></div>
+					</div>
 					<div class="card-tech"><span class="first">Техника:</span><span class="second">${ tech }</span></div>
 					<div class="card-tech"><span class="first">Адрес проживания:</span><span class="second">${ address }</span></div>
 					<div class="card-tech"><span class="first">Что умею делать:</span><span class="second">${ skill }</span></div>
-					<div class="card-tech"><span class="first">Опыт:</span><span class="second">${ exp } </span></div>
-					<div class="card-tech"><span class="first">Гарантия:</span><span class="second">1 мес. </span></div>
-					<div class="card-tech"><span class="first">Выезд:</span><span class="second">Да </span></div>
+					<div class="card-tech add">
+						<div class="span-wrapper">
+							<span class="first-exp">Опыт:</span><span class="second-town">${ exp } </span>
+						</div>
+						<div class="span-wrapper">
+							<span class="first-gar">Гарантия:</span><span class="second-dist"> 1 мес. </span>
+						</div>
+					</div>
+					<div class="card-tech add">
+						<div class="span-wrapper"><span class="first-exp">Выезд:</span><span class="second-town">Да </span></div>
+						<div class="span-wrapper"><span class="first-gar">Время работы:</span><span class="second-dist">8:00 - 21:00 </span></div>
+					</div>
 					<div class="card-tech"><span class="first">Дни работы:</span><span class="second">Понедельник-воскресенье </span></div>
-					<div class="card-tech"><span class="first">Время работы:</span><span class="second">8:00 - 21:00 </span></div>
 					<div class="card-about"><span class="first">Обо мне:</span><span class="second on">Показать</span>
 					<div class="card-info">
 						<div class="card-info-inner">
@@ -152,7 +162,7 @@ const generateCards = scrolling => {
 					</p>
 					<div class="card-button-wrapper">
 						<a href="tel:${ tel }" class="master-tel">
-							Телефон
+							${ tel }
 						</a>
 						<button class="card-button">
 								Оставить заявку

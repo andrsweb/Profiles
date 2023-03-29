@@ -47,7 +47,7 @@
 		margin-bottom: 0
 	}
 
-	&-name, &-town, &-dist, &-metro, &-tech, &-about {
+	&-name, &-tech, &-about {
 		font-size: 20px;
 		margin-bottom: 10px;
 		padding-right: 10px;
@@ -85,6 +85,26 @@
 		}
 	}
 
+	.first-town, .first-dist, .first-metro, .first-exp, .first-gar {
+		font-weight: $fw-medium;
+		font-size: 18px;
+		margin-right: 10px;
+		display: inline-block;
+		min-width: 80px;
+	}
+
+	.second-town, .second-dist, .second-metro {
+		font-weight: $fw-regular;
+		font-size: 18px;
+		margin-right: 30px;
+		display: inline-block;
+		min-width: 80px;
+	}
+
+	.card-town {
+		margin-bottom: 5px;
+	}
+
 	&-photo {
 		width: 100%;
 		display: flex;
@@ -120,22 +140,30 @@
 .master-rate {
 	display: flex;
 	align-items: center;
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-bottom: 5px;
 }
 
 .master-tel {
 	color: $black;
-	border-radius: 10px;
-	margin-right: 5px;
 	font-size: 18px;
 	display: flex;
 	align-items: center;
+	border: 0;
+	padding: 0;
+
+	&:hover {
+		opacity: 0.75;
+		background-color: $white;
+		color: $accent;
+	}
 }
 
 .card-button-wrapper {
 	display: flex;
-	margin-top: 30px;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 0;
 }
 
 fieldset {
@@ -169,11 +197,11 @@ input {
 		margin-bottom: 0;
 	}
 
-	// &::placeholder {
-	// 	font-family: $ff;
-	// 	font-size: 20px;
-	// 	opacity: 1;
-	// }
+	&::placeholder {
+		font-family: $ff;
+		font-size: 20px;
+		opacity: 1;
+	}
 
 	@media all and (min-width: $xl) {
 		margin-bottom: 0;
@@ -216,4 +244,26 @@ input {
 			visibility: visible;
 		}
 	}
+}
+
+.span-wrapper {
+	width: 36%;
+
+	&-top {
+		&:first-child {
+			width: 36%;
+		}
+
+		&:nth-child( 2 ) {
+			width: 30%;
+		}
+
+		&:last-child {
+			width: 34%;
+		}
+	}
+}
+
+.card-tech.add {
+	display: flex;
 }
