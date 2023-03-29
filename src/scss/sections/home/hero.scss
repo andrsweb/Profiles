@@ -267,3 +267,38 @@ input {
 .card-tech.add {
 	display: flex;
 }
+
+.filter {
+	position: relative;
+
+	&.active .tips {
+		display: block
+	}
+}
+
+.tips {
+	display: none;
+
+	&:not(:empty) {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		height: 150px;
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.025);
+		overflow-y: auto;
+		z-index: 1
+	}
+}
+
+.tip {
+	padding: 5px 12px;
+	cursor: pointer;
+	transition: background-color ease-out $tr;
+
+	&:hover {
+		background-color: #ededed
+	}
+}

@@ -9,7 +9,9 @@ let data			= [],
 	filterMetro		= '',
 	filterTech		= '',
 	filterName		= '',
-	offset			= 0
+	offset			= 0,
+	tipsTown		= [],
+	tipsMetro		= []
 
 document.addEventListener( 'DOMContentLoaded', () => {
 	'use strict'
@@ -19,6 +21,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		if( Array.isArray( json ) ){
 			data 			= json
 			filteredData	= data.slice( offset, offset + STEP )
+			populateTips()
 			generateCards()
 		}
 	} )
@@ -26,6 +29,37 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	// 2. Add listeners for inputs.
 	addListenersForInputs()
 } )
+
+/**
+ * Populate tips arrays with unique data.
+ */
+const populateTips = () => {
+	data.forEach( ( { town, metro } ) => {
+		if( ! tipsTown.includes( town ) ) tipsTown.push( town )
+
+		if( ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
+	} )
+
+	generateTips( tipsTown, document.querySelector( '.tips-town' ) )
+	generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
+}
+
+/**
+ * Output tips structure into HTML.
+ *
+ * @param {string[]} tipsData			Prepared array with tips data.
+ * @param {HTMLObjectElement} tipsList	Wrapper where to output tips in HTML.
+ */
+const generateTips = ( tipsData, tipsList ) => {
+	if( ! tipsData.length || ! tipsList ) return
+
+	let structure = ''
+
+	tipsData.forEach( town => {
+		structure += `<li class="tip">${ town }</li>`
+	} )
+	tipsList.innerHTML = structure
+}
 
 /**
  * Just get all data from json file.
@@ -57,6 +91,9 @@ const addListenersForInputs = () => {
 		input.addEventListener( 'keyup', processInputChange )
 		input.addEventListener( 'change', processInputChange )
 		input.addEventListener( 'blur', processInputChange )
+
+		input.addEventListener( 'click', showFiltersTips )
+		input.addEventListener( 'focus', showFiltersTips )
 	} )
 }
 
@@ -222,6 +259,11 @@ window.addEventListener( 'scroll', () => {
 	results.classList.remove( 'filtering' )
 } )
 
+/**
+ * Get element offset.
+ * @param elem
+ * @returns {{top: number, left: number, bottom: number, right: number}}
+ */
 const getCoords = elem => {
 	let box = elem.getBoundingClientRect()
 
@@ -231,4 +273,40 @@ const getCoords = elem => {
 		bottom: box.bottom + window.pageYOffset,
 		left: box.left + window.pageXOffset
 	}
+}
+
+/**
+ * Add/remove active class for focused filter.
+ *
+ * @param {Event} e
+ */
+const showFiltersTips = e => {
+	const
+		filtersWrappers	= document.querySelectorAll( '.filter' ),
+		filterWrapper	= e.target.closest( '.filter' )
+
+	filtersWrappers.forEach( filter => filter.classList.remove( 'active' ) )
+	filterWrapper.classList.add( 'active' )
+	closeTips( filterWrapper )
+}
+
+/**
+ * Hide tips list when click outside or on tip item.
+ *
+ * @param {HTMLObjectElement} filterWrapper
+ */
+const closeTips = filterWrapper => {
+	document.addEventListener( 'click', e => {
+		e.stopPropagation()
+
+		const target = e.target
+
+		if( ( target.className && ! target.classList.contains( 'filter' ) ) && ! target.closest( '.filter' ) )
+			filterWrapper.classList.remove( 'active' )
+
+		if( target.className && target.classList.contains( 'tip' ) ){
+			filterWrapper.querySelector( 'input' ).value = target.innerText
+			filterWrapper.classList.remove( 'active' )
+		}
+	} )
 }
