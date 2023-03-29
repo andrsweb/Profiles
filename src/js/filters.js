@@ -1,5 +1,5 @@
-import { showPopup } from "./popup"
-import { showCardPopup } from "./card-popup"
+import { showPopup } from './popup'
+import { showCardPopup } from './card-popup'
 
 const STEP			= 1
 let data			= [],
@@ -21,27 +21,55 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		if( Array.isArray( json ) ){
 			data 			= json
 			filteredData	= data.slice( offset, offset + STEP )
-			populateTips()
 			generateCards()
 		}
 	} )
 
 	// 2. Add listeners for inputs.
 	addListenersForInputs()
+
+	// 3. Select tips.
+	clickTip()
 } )
 
 /**
  * Populate tips arrays with unique data.
+ *
+ * @param {string} filter
  */
-const populateTips = () => {
-	data.forEach( ( { town, metro } ) => {
-		if( ! tipsTown.includes( town ) ) tipsTown.push( town )
+const populateTips = ( filter = '' ) => {
+	// No specific filter - generate all tips.
+	if( ! filter ){
+		tipsTown	= []
+		tipsMetro	= []
 
-		if( ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
-	} )
+		data.forEach( ( { town, metro } ) => {
+			if( town && town.includes( filterTown ) && ! tipsTown.includes( town ) ) tipsTown.push( town )
 
-	generateTips( tipsTown, document.querySelector( '.tips-town' ) )
-	generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
+			if( metro && metro.includes( filterMetro ) && ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
+		} )
+
+		generateTips( tipsTown, document.querySelector( '.tips-town' ) )
+		generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
+	}	else {
+		switch( filter ){
+			case 'town':
+				tipsTown = []
+				data.forEach( ( { town } ) => {
+					if( town.toLowerCase().includes( filterTown.toLowerCase() ) && ! tipsTown.includes( town ) ) tipsTown.push( town )
+				} )
+				generateTips( tipsTown, document.querySelector( '.tips-town' ) )
+				break
+
+			case 'metro':
+				tipsMetro = []
+				data.forEach( ( { metro } ) => {
+					if( metro.includes( filterMetro ) && ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
+				} )
+				generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
+				break
+		}
+	}
 }
 
 /**
@@ -59,6 +87,40 @@ const generateTips = ( tipsData, tipsList ) => {
 		structure += `<li class="tip">${ town }</li>`
 	} )
 	tipsList.innerHTML = structure
+}
+
+/**
+ * Click on tip.
+ */
+const clickTip = () => {
+	const tips = document.querySelectorAll( '.tips' )
+
+	if( ! tips.length ) return
+
+	tips.forEach( tipsList => {
+		const filterWrapper = tipsList.closest( '.filter' )
+
+		tipsList.addEventListener( 'click', e => {
+			e.stopPropagation()
+
+			const target = e.target
+
+			if( target.classList.contains( 'tip' ) ){
+				filterWrapper.querySelector( 'input' ).value = target.innerText
+				filterWrapper.querySelector( 'input' ).dispatchEvent( new Event( 'input' ) )
+				filterWrapper.classList.remove( 'active' )
+			}
+		} )
+	} )
+
+	document.addEventListener( 'click', e => {
+		e.stopPropagation()
+
+		const target = e.target
+
+		if( ( target.className && ! target.classList.contains( 'filter' ) ) && ! target.closest( '.filter' ) )
+			document.querySelectorAll( '.filter' ).forEach( filter => filter.classList.remove( 'active' ) )
+	} )
 }
 
 /**
@@ -89,10 +151,7 @@ const addListenersForInputs = () => {
 
 	inputs.forEach( input => {
 		input.addEventListener( 'keyup', processInputChange )
-		input.addEventListener( 'change', processInputChange )
-		input.addEventListener( 'blur', processInputChange )
-
-		input.addEventListener( 'click', showFiltersTips )
+		input.addEventListener( 'input', processInputChange )
 		input.addEventListener( 'focus', showFiltersTips )
 	} )
 }
@@ -107,11 +166,17 @@ const processInputChange = e => {
 		input	= e.target,
 		value	= input.value || ''
 
-	if( input.classList.contains( 'town' ) ) filterTown = value
+	if( input.classList.contains( 'town' ) ){
+		filterTown = value
+		populateTips( 'town' )
+	}
 
 	if( input.classList.contains( 'dist' ) ) filterDist = value
 
-	if( input.classList.contains( 'metro' ) ) filterMetro = value
+	if( input.classList.contains( 'metro' ) ){
+		filterMetro = value
+		populateTips( 'metro' )
+	}
 
 	if( input.classList.contains( 'tech' ) ) filterTech = value
 
@@ -261,6 +326,7 @@ window.addEventListener( 'scroll', () => {
 
 /**
  * Get element offset.
+ *
  * @param elem
  * @returns {{top: number, left: number, bottom: number, right: number}}
  */
@@ -287,26 +353,5 @@ const showFiltersTips = e => {
 
 	filtersWrappers.forEach( filter => filter.classList.remove( 'active' ) )
 	filterWrapper.classList.add( 'active' )
-	closeTips( filterWrapper )
-}
-
-/**
- * Hide tips list when click outside or on tip item.
- *
- * @param {HTMLObjectElement} filterWrapper
- */
-const closeTips = filterWrapper => {
-	document.addEventListener( 'click', e => {
-		e.stopPropagation()
-
-		const target = e.target
-
-		if( ( target.className && ! target.classList.contains( 'filter' ) ) && ! target.closest( '.filter' ) )
-			filterWrapper.classList.remove( 'active' )
-
-		if( target.className && target.classList.contains( 'tip' ) ){
-			filterWrapper.querySelector( 'input' ).value = target.innerText
-			filterWrapper.classList.remove( 'active' )
-		}
-	} )
+	populateTips( e.target.className.replace( 'search ', '' ) )
 }

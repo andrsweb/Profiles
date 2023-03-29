@@ -205,7 +205,6 @@ input {
 
 	@media all and (min-width: $xl) {
 		margin-bottom: 0;
-		margin-right: 20px;
 
 		&:last-child {
 			margin-right: 0;
@@ -271,6 +270,14 @@ input {
 .filter {
 	position: relative;
 
+	@media (min-width: $xl) {
+		margin-right: 20px;
+
+		&:last-child {
+			margin-right: 0
+		}
+	}
+
 	&.active .tips {
 		display: block
 	}
@@ -284,7 +291,7 @@ input {
 		top: 100%;
 		left: 0;
 		width: 100%;
-		height: 150px;
+		max-height: 150px;
 		background-color: #fff;
 		border-radius: 10px;
 		box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.025);
