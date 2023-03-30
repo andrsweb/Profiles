@@ -315,7 +315,7 @@ window.addEventListener( 'scroll', () => {
 		! results ||
 		results.classList.contains( 'filtering' ) ||
 		offset > data.length ||
-		scrolled < getCoords( results ).bottom - window.innerHeight + 40
+		scrolled < getCoords( results ).bottom - window.innerHeight + 40 
 	) return
 
 	results.classList.add( 'filtering' )
