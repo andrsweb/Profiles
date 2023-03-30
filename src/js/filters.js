@@ -11,7 +11,9 @@ let data			= [],
 	filterName		= '',
 	offset			= 0,
 	tipsTown		= [],
-	tipsMetro		= []
+	tipsMetro		= [],
+	tipsTech		= [],
+	tipsDist		= []
 
 document.addEventListener( 'DOMContentLoaded', () => {
 	'use strict'
@@ -43,14 +45,20 @@ const populateTips = ( filter = '' ) => {
 		tipsTown	= []
 		tipsMetro	= []
 
-		data.forEach( ( { town, metro } ) => {
+		data.forEach( ( { town, metro, dist, tech } ) => {
 			if( town && town.includes( filterTown ) && ! tipsTown.includes( town ) ) tipsTown.push( town )
 
 			if( metro && metro.includes( filterMetro ) && ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
+
+			if( dist && dist.includes( filterDist ) && ! tipsDist.includes( dist ) ) tipsDist.push( dist )
+
+			if( tech && tech.includes( filterTech ) && ! tipsTech.includes( tech ) ) tipsTech.push( tech )
 		} )
 
 		generateTips( tipsTown, document.querySelector( '.tips-town' ) )
 		generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
+		generateTips( tipsDist, document.querySelector( '.tips-dist' ) )
+		generateTips( tipsTech, document.querySelector( '.tips-tech' ) )
 	}	else {
 		switch( filter ){
 			case 'town':
@@ -67,6 +75,22 @@ const populateTips = ( filter = '' ) => {
 					if( metro.includes( filterMetro ) && ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
 				} )
 				generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
+				break
+
+			case 'dist':
+				tipsDist = []
+				data.forEach( ( { dist } ) => {
+					if( dist.includes( filterDist ) && ! tipsDist.includes( dist ) ) tipsDist.push( dist )
+				} )
+				generateTips( tipsDist, document.querySelector( '.tips-dist' ) )
+				break
+
+			case 'tech':
+				tipsTech = []
+				data.forEach( ( { tech } ) => {
+					if( tech.includes( filterTech ) && ! tipsTech.includes( tech ) ) tipsTech.push( tech )
+				} )
+				generateTips( tipsTech, document.querySelector( '.tips-tech' ) )
 				break
 		}
 	}
@@ -229,7 +253,7 @@ const generateCards = scrolling => {
 						<div class="span-wrapper-top"><span class="first-dist">Район:</span><span class="second-dist">${ dist }</span></div>
 						<div class="span-wrapper-top"><span class="first-metro">Метро:</span><span class="second-metro">${ metro }</span></div>
 					</div>
-					<div class="card-tech"><span class="first">Техника:</span><span class="second">${ tech }</span></div>
+					<div class="card-tech"><span class="first">Услуги:</span><span class="second">${ tech }</span></div>
 					<div class="card-tech"><span class="first">Адрес проживания:</span><span class="second">${ address }</span></div>
 					<div class="card-tech"><span class="first">Что умею делать:</span><span class="second">${ skill }</span></div>
 					<div class="card-tech add">
