@@ -8,7 +8,6 @@ let data			= [],
 	filterDist		= '',
 	filterMetro		= '',
 	filterTech		= '',
-	filterName		= '',
 	offset			= 0,
 	tipsTown		= [],
 	tipsMetro		= [],
@@ -220,7 +219,7 @@ const processInputChange = e => {
 const processFilters = ( scrolling = 0 ) => {
 	if( ! scrolling ) offset = 0
 
-	if( ! filterTown && ! filterDist && ! filterMetro && ! filterTech && ! filterName ){
+	if( ! filterTown && ! filterDist && ! filterMetro && ! filterTech ){
 		filteredData = data.slice( offset, offset + STEP )
 	}	else {
 		filteredData = data.filter( ( { town, dist, metro, tech } ) => {
