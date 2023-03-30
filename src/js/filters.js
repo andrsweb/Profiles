@@ -71,7 +71,7 @@ const populateTips = ( filter = '' ) => {
 			case 'metro':
 				tipsMetro = []
 				data.forEach( ( { metro } ) => {
-					if( metro.includes( filterMetro ) && ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
+					if( metro.toLowerCase().includes( filterMetro.toLowerCase() ) && ! tipsMetro.includes( metro ) ) tipsMetro.push( metro )
 				} )
 				generateTips( tipsMetro, document.querySelector( '.tips-metro' ) )
 				break
@@ -79,7 +79,7 @@ const populateTips = ( filter = '' ) => {
 			case 'dist':
 				tipsDist = []
 				data.forEach( ( { dist } ) => {
-					if( dist.includes( filterDist ) && ! tipsDist.includes( dist ) ) tipsDist.push( dist )
+					if( dist.toLowerCase().includes( filterDist.toLowerCase() ) && ! tipsDist.includes( dist ) ) tipsDist.push( dist )
 				} )
 				generateTips( tipsDist, document.querySelector( '.tips-dist' ) )
 				break
@@ -87,7 +87,7 @@ const populateTips = ( filter = '' ) => {
 			case 'tech':
 				tipsTech = []
 				data.forEach( ( { tech } ) => {
-					if( tech.includes( filterTech ) && ! tipsTech.includes( tech ) ) tipsTech.push( tech )
+					if( tech.toLowerCase().includes( filterTech.toLowerCase() ) && ! tipsTech.includes( tech ) ) tipsTech.push( tech )
 				} )
 				generateTips( tipsTech, document.querySelector( '.tips-tech' ) )
 				break
