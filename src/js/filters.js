@@ -195,14 +195,20 @@ const processInputChange = e => {
 		populateTips( 'town' )
 	}
 
-	if( input.classList.contains( 'dist' ) ) filterDist = value
+	if( input.classList.contains( 'dist' ) ) {
+		filterDist = value
+		populateTips( 'dist' )
+	} 
 
 	if( input.classList.contains( 'metro' ) ){
 		filterMetro = value
 		populateTips( 'metro' )
 	}
 
-	if( input.classList.contains( 'tech' ) ) filterTech = value
+	if( input.classList.contains( 'tech' ) ) {
+		filterTech = value
+		populateTips( 'tech' )
+	} 
 
 	processFilters()
 }
