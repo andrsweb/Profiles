@@ -6,33 +6,48 @@ document.addEventListener( 'DOMContentLoaded', () => {
 } )
 
 const submitForm = ( selector ) => {
-    const form         = document.querySelector( selector )
-    const formResponse = form.querySelector( '.form-response' )
+	const forms	= document.querySelectorAll( selector )
 
-    form.addEventListener( 'submit', e => {
+	if( ! forms.length ) return
 
-        e.preventDefault()
-		const request		= new XMLHttpRequest()
-        request.open( 'post', 'send-form.php', true )
+	forms.forEach( form => {
+		form.addEventListener( 'submit', e => {
+			e.preventDefault()
 
-		const formResponse	= form.querySelector( '.form-response' ),
-		
-		formData		= new FormData( form ),
-		formType		= form.dataset.type
+			const
+				formResponse	= form.querySelector( '.form-response' ),
+				request			= new XMLHttpRequest(),
+				formData		= new FormData( form ),
+				formType		= form.dataset.type
 
-		formData.append( 'func', formType )
-        formResponse.classList.remove( [ 'success', 'error' ] )
-        formResponse.textContent = 'Обработка...'
-        request.addEventListener( 'load', () => {
-            if  ( request.status === 200 ) {
-                formResponse.classList.add( 'success' )
-            } else {
-                formResponse.classList.add( 'error' )
-                console.error( request.response )
-            }
+			formData.append( 'func', formType )
+			request.open( 'post', 'send-form.php', true )
+			request.responseType = 'json'
 
-            formResponse.textContent = request.response
-        } )
-        request.send( formData )
-    } )
+			formResponse.classList.remove( ['success', 'error'] )
+			formResponse.textContent = 'Обработка...'
+
+			request.addEventListener( 'load', () => {
+
+				if( request.status === 200 ){
+
+					if( request.response.success ){
+						form.classList.add( 'success' )
+						form.classList.remove( 'error' )
+						form.innerHTML = request.response.message
+					}	else {
+						formResponse.classList.remove( 'success' )
+						formResponse.classList.add( 'error' )
+						formResponse.textContent = request.response.message
+					}
+				}	else {
+					formResponse.classList.remove( 'success' )
+					formResponse.classList.add( 'error' )
+					formResponse.textContent = request.response
+				}
+			} )
+
+			request.send( formData )
+		} )
+	} )
 }
