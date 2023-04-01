@@ -67,7 +67,7 @@ function as_send_card_form(){
 
 function as_send_email( string $subject, string $message ){
 
-	$result = mail('andrsweb@mail.ru', $subject, $message );
+	$result = mail('golden-web@mail.ru', $subject, $message );
 
 	if( $result )
 		echo json_encode( [
