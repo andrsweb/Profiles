@@ -35,40 +35,26 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 }
 
 function get_data() {
-	$name = $_POST['name'];
-	$tel = $_POST['tel'];
-	$file_name='data'. '.json';
+	$name		= $_POST['name'];
+	$tel		= $_POST['tel'];
+	$file_name	= 'data.json';
 
-	if(file_exists("$file_name")) { 
-		$current_data=file_get_contents("$file_name");
-		$array_data=json_decode($current_data, true);
-
-		$extra=array(
-			'name' => $_POST['name'],
-			'tel' => $_POST['tel']
-		);
-		$array_data[]=$extra;
-		echo "file exist<br/>";
-		return json_encode($array_data);
+	if( file_exists( $file_name ) ){
+		$current_data	= file_get_contents( $file_name );
+		$array_data		= json_decode( $current_data, true );
+		$extra			= ['name' => $name, 'tel' => $tel];
+		$array_data[]	= $extra;
+		$data_to_write	= json_encode( $array_data );
+	}	else {
+		$datae = [[
+			'name'	=> $name,
+			'tel'	=> $tel
+		]];
+		$data_to_write = json_encode( $datae );
 	}
-	else {
-		$datae=array();
-		$datae[]=array(
-			'Name' => $_POST['name'],
-			'tel' => $_POST['tel']
-		);
-		echo "file not exist<br/>";
-		return json_encode($datae);   
-	}
-}
 
-$file_name='data'. '.json';
-
-if(file_put_contents("$file_name", get_data())) {
-	echo 'success';
-}                
-else {
-	echo 'There is some error';                
+	if( file_put_contents( $file_name, $data_to_write ) ) echo 'success';
+	else echo 'There is some error';
 }
 
 function as_send_header_form(){
