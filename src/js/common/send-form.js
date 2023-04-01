@@ -3,6 +3,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 	submitForm( '.form' )
 	submitForm( '.card-form' )
+	submitForm( '.cards-form' )
 } )
 
 const submitForm = ( selector ) => {

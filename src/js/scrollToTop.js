@@ -11,8 +11,9 @@ const scrollToTop = () => {
 
 	const scrollArrow = document.querySelector( '.col-img' )
 
+	if( ! scrollArrow ) return
+
 	scrollArrow.addEventListener( 'click', () => {
-		if( ! scrollArrow ) return
 
 		window.scrollTo( {
 			top: 0,
