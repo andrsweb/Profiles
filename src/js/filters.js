@@ -249,7 +249,7 @@ const generateCards = scrolling => {
 	if( ! filteredData.length ){
 		structure = scrolling ? '' : 'Ничего не найдено'
 	}	else {
-		filteredData.forEach( ( { town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp } ) => {
+		filteredData.forEach( ( { town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
 			structure += `<li class="card">
 				<div class="card-inner">
 					<div class="card-name"><span class="first">ФИО:</span><span class="second">${ name }</span></div>
@@ -266,14 +266,14 @@ const generateCards = scrolling => {
 							<span class="first-exp">Опыт:</span><span class="second-town">${ exp } </span>
 						</div>
 						<div class="span-wrapper">
-							<span class="first-gar">Гарантия:</span><span class="second-dist"> 1 мес. </span>
+							<span class="first-gar">Гарантия:</span><span class="second-dist"> ${ gar } </span>
 						</div>
 					</div>
 					<div class="card-tech add">
-						<div class="span-wrapper"><span class="first-exp">Выезд:</span><span class="second-town">Да </span></div>
-						<div class="span-wrapper"><span class="first-gar">Время работы:</span><span class="second-dist">8:00 - 21:00 </span></div>
+						<div class="span-wrapper"><span class="first-exp">Выезд:</span><span class="second-town"> ${ arrive } </span></div>
+						<div class="span-wrapper"><span class="first-gar">Время работы:</span><span class="second-dist"> ${ workTime } </span></div>
 					</div>
-					<div class="card-tech"><span class="first">Дни работы:</span><span class="second">Понедельник-воскресенье </span></div>
+					<div class="card-tech"><span class="first">Дни работы:</span><span class="second"> ${ days } </span></div>
 					<div class="card-about"><span class="first">Обо мне:</span><span class="second on">Показать</span>
 					<div class="card-info">
 						<div class="card-info-inner">

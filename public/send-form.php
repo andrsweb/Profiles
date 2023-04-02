@@ -35,26 +35,81 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 }
 
 function get_data() {
-	$name		= $_POST['name'];
-	$tel		= $_POST['tel'];
-	$file_name	= 'data.json';
+	$name		= $_POST['full-name'];
+	$town		= $_POST['town'];
+	$metro		= $_POST['metro'];
+	$tech		= $_POST['tech'];
+	$dist		= $_POST['dist'];
+	$src		= $_POST['src'];
+	$address	= $_POST['address'];
+	$skill	    = $_POST['skill'];
+	$about	    = $_POST['about'];
+	$rate	    = $_POST['rate'];
+	$done	    = $_POST['done'];
+	$tel	    = $_POST['tel'];
+	$exp	    = $_POST['exp'];
+	$arr	    = $_POST['arrive'];
+	$days	    = $_POST['days'];
+	$gar	    = $_POST['gar'];
+	$workTime	= $_POST['workTime'];
+	$file_name	= 'data/data.json';
 
 	if( file_exists( $file_name ) ){
 		$current_data	= file_get_contents( $file_name );
 		$array_data		= json_decode( $current_data, true );
-		$extra			= ['name' => $name, 'tel' => $tel];
+		$extra			= [
+			'name' => $name, 
+			'town' => $town,
+			'metro' => $metro,
+			'tech' => $tech,
+			'dist' => $dist,
+			'src' => $src,
+			'address' => $address,
+			'skill' => $skill,
+			'about' => $about,
+			'rate' => $rate,
+			'done' => $done,
+			'tel' => $tel,
+			'exp' => $exp,
+			'arrive' => $arr,
+			'days' => $days,
+			'gar' => $gar,
+			'workTime' => $workTime
+		];
 		$array_data[]	= $extra;
-		$data_to_write	= json_encode( $array_data );
+		$data_to_write	= json_encode( $array_data, JSON_UNESCAPED_UNICODE );
 	}	else {
 		$datae = [[
-			'name'	=> $name,
-			'tel'	=> $tel
+			'name' => $name, 
+			'town' => $town,
+			'metro' => $metro,
+			'tech' => $tech,
+			'dist' => $dist,
+			'src' => $src,
+			'address' => $address,
+			'skill' => $skill,
+			'about' => $about,
+			'rate' => $rate,
+			'done' => $done,
+			'tel' => $tel,
+			'exp' => $exp,
+			'exp' => $exp,
+			'arrive' => $arr,
+			'days' => $days,
+			'gar' => $gar,
+			'workTime' => $workTime
 		]];
-		$data_to_write = json_encode( $datae );
+		$data_to_write = json_encode( $datae, JSON_UNESCAPED_UNICODE );
 	}
 
-	if( file_put_contents( $file_name, $data_to_write ) ) echo 'success';
-	else echo 'There is some error';
+	if( file_put_contents( $file_name, $data_to_write ) )echo json_encode( [
+		'success'	=> 1,
+		'message'	=> 'Анкета отправлена'
+	] );	// Success.
+	else echo json_encode( [
+		'success'	=> 0,
+		'message'	=> 'Ошибка отправки. Пожалуйста, попробуйте позже.'
+	] );	// Failed.
 }
 
 function as_send_header_form(){
