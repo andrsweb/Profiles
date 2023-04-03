@@ -9,6 +9,20 @@
 	border-radius: 5px;
 	background-color: rgba(167, 167, 167, 0.116);
 
+	&:last-child {
+		animation: fade 1s ease forwards;
+
+		@keyframes fade {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+	}
+
 	&-inner {
 		width: 100%;
 		display: flex;
