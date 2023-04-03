@@ -51,7 +51,7 @@
 	$pass = $_GET['pass'];
 
 	if( $user === "admin" && $pass === "admin" ) {
-		'
+		echo '
 		<form class="cards-form" data-type="admin-form">
 			<fieldset>
 				<div class="left">
@@ -169,7 +169,7 @@
 	';
 	}
 	else {
-		echo "отсоси хуйца";
+		echo "Доступ запрещен";
 	} 
 ?>
 
