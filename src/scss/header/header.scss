@@ -110,11 +110,25 @@
 	}
 }
 
-.hero .popup-button, .card-button, .master-tel {
+.hero .popup-button {
 	border: 1px solid $accent;
 	padding: 10px 20px;
 	font-size: 18px;
 	margin-top: 5px;
+	transition: background-color ease $tr,
+				color ease $tr;
+
+	&:hover {
+		background-color: $accent;
+		color: $white;
+	}
+}
+
+.card-button {
+	border: 1px solid $accent;
+	margin: 0;
+	padding: 5px 10px;
+	max-width: 180px;
 	transition: background-color ease $tr,
 				color ease $tr;
 
