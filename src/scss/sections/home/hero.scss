@@ -180,6 +180,13 @@ input {
 			opacity: 0.75;
 		}
 	}
+
+	.form-response {
+		font-family: $ff;
+		font-weight: $fw-bold;
+		margin-top: 15px;
+		color: $accent;
+	}
 }
 
 label {

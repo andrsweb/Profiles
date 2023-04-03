@@ -27,13 +27,25 @@ const submitForm = ( selector ) => {
 
 			formResponse.classList.remove( ['success', 'error'] )
 			formResponse.textContent = 'Обработка...'
+
 			request.addEventListener( 'load', () => {
 				
 				if( request.status === 200 ){
 					if( request.response.success ){
-						form.classList.add( 'success' )
-						form.classList.remove( 'error' )
-						form.innerHTML = request.response.message
+
+						if( formType == 'admin-form' ) {
+							formResponse.textContent = 'Анкета отправлена'
+							setTimeout(() => {
+								formResponse.textContent = ''
+								form.reset()
+							}, 4000);
+						}
+
+						if( formType !== 'admin-form') {
+							form.classList.add( 'success' )
+							form.classList.remove( 'error' )
+							form.innerHTML = request.response.message
+						}
 					}	else {
 						formResponse.classList.remove( 'success' )
 						formResponse.classList.add( 'error' )
