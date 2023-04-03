@@ -123,6 +123,9 @@ input {
 
 .admin-text {
 	color: $white;
+	font-size: 15px;
+	line-height: 1;
+	text-align: center;
 }
 
 .cards-form {
@@ -130,18 +133,36 @@ input {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	border: 1px dotted $accent;
+	border-radius: 5px;
+	background-color: rgba(167, 167, 167, 0.116);
 
 	fieldset {
 		width: 100%;
-		max-width: 850px;
+		
 		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
+		justify-content: center;
+		
+
+		@media all and (min-width: $xl) {
+			justify-content: space-between;
+			align-items: flex-start;
+			max-width: 850px;
+		}
 	}
 
 	input {
 		font-size: 15px;
 		padding: 5px 0 5px 10px;
+		width: 100%;
+
+		&::placeholder {
+			font-size: 14px;
+		}
+
+		@media all and (min-width: $xl) {
+			width: auto;
+		}
 	}
 
 	.send-form {
@@ -165,6 +186,7 @@ label {
 	display: inline-block;
 	min-width: 125px;
 	font-size: 18px;
+	width: 160px;
 }
 
 .left {
@@ -173,4 +195,36 @@ label {
 
 .right {
 	width: 50%;
+}
+
+.admin-page {
+	.wrapper {
+		margin-top: 0;
+	}
+
+	.hero {
+		padding-top: 90px;
+		padding-bottom: 20px;
+
+		@media all and (min-width: $lg) {
+			padding-top: 150px;
+			padding-bottom: 0;
+		}
+	}
+
+	h1 {
+		font-size: 25px;
+
+		@media all and (min-width: $lg) {
+			font-size: 36px;
+		}
+	}
+
+	.hero-input {
+		margin-left: 10px;
+	}
+
+	.header-logo-wrapper {
+		margin-right: 30px;
+	}
 }
