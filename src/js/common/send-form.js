@@ -29,10 +29,8 @@ const submitForm = ( selector ) => {
 			formResponse.textContent = 'Обработка...'
 
 			request.addEventListener( 'load', () => {
-				
 				if( request.status === 200 ){
 					if( request.response.success ){
-
 						if( formType === 'admin-form' ) {
 							formResponse.textContent = 'Анкета отправлена'
 							form.reset()
@@ -44,7 +42,6 @@ const submitForm = ( selector ) => {
 							form.classList.remove( 'error' )
 							form.innerHTML = request.response.message
 						}
-
 					}	else {
 						formResponse.classList.remove( 'success' )
 						formResponse.classList.add( 'error' )

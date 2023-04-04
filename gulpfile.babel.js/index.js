@@ -17,13 +17,13 @@ import webpCss from 'gulp-webp-css'
 import clear from './tasks/clear'
 import html from './tasks/html'
 import js from './tasks/js'
+import jsAdmin from './tasks/js-admin'
 import img from './tasks/img'
 
 // Config.
 import path from './config/path'
 import app from './config/app'
-import gulpIf from "gulp-if";
-import imagemin from "gulp-imagemin";
+import gulpIf from 'gulp-if'
 
 const sass = gulpSass( dartSass )
 
@@ -60,12 +60,13 @@ const watcher = () => {
 	gulp.watch( path.html.watch, html ).on( 'all', browserSync.reload )
 	gulp.watch( path.scss.watch, scss )
 	gulp.watch( path.js.watch, js ).on( 'all', browserSync.reload )
+	gulp.watch( path.jsAdmin.watch, jsAdmin ).on( 'all', browserSync.reload )
 	gulp.watch( path.img.watch, img ).on( 'all', browserSync.reload )
 }
 
 const build = gulp.series(
 	clear,
-	gulp.parallel( html, scss, js, img )
+	gulp.parallel( html, scss, js, jsAdmin, img )
 )
 
 const dev = gulp.series(

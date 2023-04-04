@@ -54,62 +54,78 @@ function get_data() {
 	$workTime	= $_POST['workTime'];
 	$file_name	= 'data/data.json';
 
+	if(
+		! $name || ! $town || ! $metro || ! $tech || ! $dist || ! $address || ! $skill || ! $about
+		|| ! $rate || ! $done || ! $tel || ! $exp || ! $arr || ! $days || ! $gar || ! $workTime
+	){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Пожалуйста, заполните все необходимые поля.'
+		] );
+		die();
+	}
+
 	if( file_exists( $file_name ) ){
 		$current_data	= file_get_contents( $file_name );
 		$array_data		= json_decode( $current_data, true );
 		$extra			= [
-			'name' => $name, 
-			'town' => $town,
-			'metro' => $metro,
-			'tech' => $tech,
-			'dist' => $dist,
-			'src' => $src,
-			'address' => $address,
-			'skill' => $skill,
-			'about' => $about,
-			'rate' => $rate,
-			'done' => $done,
-			'tel' => $tel,
-			'exp' => $exp,
-			'arrive' => $arr,
-			'days' => $days,
-			'gar' => $gar,
-			'workTime' => $workTime
+			'id'		=> time() . '.' . rand( 0, 99999 ) . '.' . rand( 0, 99999 ),
+			'name'		=> $name,
+			'town'		=> $town,
+			'metro'		=> $metro,
+			'tech'		=> $tech,
+			'dist'		=> $dist,
+			'src'		=> $src,
+			'address'	=> $address,
+			'skill'		=> $skill,
+			'about'		=> $about,
+			'rate'		=> $rate,
+			'done'		=> $done,
+			'tel'		=> $tel,
+			'exp'		=> $exp,
+			'arrive'	=> $arr,
+			'days'		=> $days,
+			'gar'		=> $gar,
+			'workTime'	=> $workTime,
+			'approved'	=> 0
 		];
 		$array_data[]	= $extra;
 		$data_to_write	= json_encode( $array_data, JSON_UNESCAPED_UNICODE );
 	}	else {
 		$datae = [[
-			'name' => $name, 
-			'town' => $town,
-			'metro' => $metro,
-			'tech' => $tech,
-			'dist' => $dist,
-			'src' => $src,
-			'address' => $address,
-			'skill' => $skill,
-			'about' => $about,
-			'rate' => $rate,
-			'done' => $done,
-			'tel' => $tel,
-			'exp' => $exp,
-			'exp' => $exp,
-			'arrive' => $arr,
-			'days' => $days,
-			'gar' => $gar,
-			'workTime' => $workTime
+			'id'		=> time() . '.' . rand( 0, 99999 ) . '.' . rand( 0, 99999 ),
+			'name'		=> $name,
+			'town'		=> $town,
+			'metro'		=> $metro,
+			'tech'		=> $tech,
+			'dist'		=> $dist,
+			'src'		=> $src,
+			'address'	=> $address,
+			'skill'		=> $skill,
+			'about'		=> $about,
+			'rate'		=> $rate,
+			'done'		=> $done,
+			'tel'		=> $tel,
+			'exp'		=> $exp,
+			'arrive'	=> $arr,
+			'days'		=> $days,
+			'gar'		=> $gar,
+			'workTime'	=> $workTime,
+			'approved'	=> 0
 		]];
 		$data_to_write = json_encode( $datae, JSON_UNESCAPED_UNICODE );
 	}
 
-	if( file_put_contents( $file_name, $data_to_write ) )echo json_encode( [
-		'success'	=> 1,
-		'message'	=> 'Анкета отправлена'
-	] );	// Success.
-	else echo json_encode( [
-		'success'	=> 0,
-		'message'	=> 'Ошибка отправки. Пожалуйста, попробуйте позже.'
-	] );	// Failed.
+	if( file_put_contents( $file_name, $data_to_write ) )
+		echo json_encode( [
+			'success'	=> 1,
+			'message'	=> 'Анкета отправлена'
+		] );	// Success.
+	else
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Ошибка отправки. Пожалуйста, попробуйте позже.'
+		] );	// Failed.
 }
 
 function as_send_header_form(){
@@ -132,9 +148,9 @@ function as_send_header_form(){
 }
 
 function as_send_card_form(){
-	$name		 = isset( $_POST['name'] ) ? as_clean_value( $_POST['name'] ) : null;
-	$email		 = isset( $_POST['email'] ) ? as_clean_value( $_POST['email'] ) : null;
-	$tel		 = isset( $_POST['tel'] ) ? as_clean_value( $_POST['tel'] ) : null;
+	$name	= isset( $_POST['name'] ) ? as_clean_value( $_POST['name'] ) : null;
+	$email	= isset( $_POST['email'] ) ? as_clean_value( $_POST['email'] ) : null;
+	$tel	= isset( $_POST['tel'] ) ? as_clean_value( $_POST['tel'] ) : null;
 
 	// Prepare message for mail.
 	$message = "Привет!\n" .
@@ -148,7 +164,6 @@ function as_send_card_form(){
 
 
 function as_send_email( string $subject, string $message ){
-
 	$result = mail('golden-web@mail.ru', $subject, $message );
 
 	if( $result )

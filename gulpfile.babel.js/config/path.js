@@ -22,6 +22,12 @@ export default {
 		dest	: pathDest + '/js'
 	},
 
+	jsAdmin	: {
+		src		: pathSrc + '/js/admin.js',
+		watch	: pathSrc + '/js/**/*.js',
+		dest	: pathDest + '/js/admin'
+	},
+
 	img		: {
 		src		: pathSrc + '/img/**/*.{png,jpg,jpeg,gif,svg}',
 		watch	: pathSrc + '/img/**/*.{png,jpg,jpeg,gif,svg}',

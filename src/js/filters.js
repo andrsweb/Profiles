@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	getAllData().then(json => {
 		if (Array.isArray(json)) {
 			data = json
-			filteredData = data.slice(offset, offset + STEP)
+			filteredData = data.filter( card => card.approved === '1' )
+			filteredData = filteredData.slice( offset, offset + STEP )
 			generateCards()
 		}
 	})
@@ -43,8 +44,10 @@ const populateTips = (filter = '') => {
 	if (!filter) {
 		tipsTown = []
 		tipsMetro = []
+		tipsDist = []
+		tipsTech = []
 
-		data.forEach(({ town, metro, dist, tech }) => {
+		data.forEach(({ town, metro, dist, tech, approved }) => {
 			if (town && town.includes(filterTown) && !tipsTown.includes(town)) tipsTown.push(town)
 
 			if (metro && metro.includes(filterMetro) && !tipsMetro.includes(metro)) tipsMetro.push(metro)
@@ -62,32 +65,32 @@ const populateTips = (filter = '') => {
 		switch (filter) {
 			case 'town':
 				tipsTown = []
-				data.forEach(({ town }) => {
-					if (town.toLowerCase().includes(filterTown.toLowerCase()) && !tipsTown.includes(town)) tipsTown.push(town)
+				data.forEach(({ town, approved }) => {
+					if (approved === '1' && town.toLowerCase().includes(filterTown.toLowerCase()) && !tipsTown.includes(town)) tipsTown.push(town)
 				})
 				generateTips(tipsTown, document.querySelector('.tips-town'))
 				break
 
 			case 'metro':
 				tipsMetro = []
-				data.forEach(({ metro }) => {
-					if (metro.toLowerCase().includes(filterMetro.toLowerCase()) && !tipsMetro.includes(metro)) tipsMetro.push(metro)
+				data.forEach(({ metro, approved }) => {
+					if (approved === '1' && metro.toLowerCase().includes(filterMetro.toLowerCase()) && !tipsMetro.includes(metro)) tipsMetro.push(metro)
 				})
 				generateTips(tipsMetro, document.querySelector('.tips-metro'))
 				break
 
 			case 'dist':
 				tipsDist = []
-				data.forEach(({ dist }) => {
-					if (dist.toLowerCase().includes(filterDist.toLowerCase()) && !tipsDist.includes(dist)) tipsDist.push(dist)
+				data.forEach(({ dist, approved }) => {
+					if (approved === '1' && dist.toLowerCase().includes(filterDist.toLowerCase()) && !tipsDist.includes(dist)) tipsDist.push(dist)
 				})
 				generateTips(tipsDist, document.querySelector('.tips-dist'))
 				break
 
 			case 'tech':
 				tipsTech = []
-				data.forEach(({ tech }) => {
-					if (tech.toLowerCase().includes(filterTech.toLowerCase()) && !tipsTech.includes(tech)) tipsTech.push(tech)
+				data.forEach(({ tech, approved }) => {
+					if (approved === '1' && tech.toLowerCase().includes(filterTech.toLowerCase()) && !tipsTech.includes(tech)) tipsTech.push(tech)
 				})
 				generateTips(tipsTech, document.querySelector('.tips-tech'))
 				break
@@ -214,15 +217,16 @@ const processInputChange = e => {
 
 /**
  * Filter our data using input values and offset
- * 
  */
 const processFilters = (scrolling = 0) => {
 	if (!scrolling) offset = 0
 
+	filteredData = data.filter( card => card.approved === '1' )
+
 	if (!filterTown && !filterDist && !filterMetro && !filterTech) {
-		filteredData = data.slice(offset, offset + STEP)
+		filteredData = filteredData.slice(offset, offset + STEP)
 	} else {
-		filteredData = data.filter(({ town, dist, metro, tech }) => {
+		filteredData = filteredData.filter(({ town, dist, metro, tech }) => {
 			return (
 				(filterTown && town.toLowerCase().indexOf(filterTown.toLowerCase()) !== -1) ||
 				(filterDist && dist.toLowerCase().indexOf(filterDist.toLowerCase()) !== -1) ||
@@ -230,7 +234,6 @@ const processFilters = (scrolling = 0) => {
 				(filterTech && tech.toLowerCase().indexOf(filterTech.toLowerCase()) !== -1)
 			)
 		})
-
 		filteredData = filteredData.filter((item, index) => (index >= offset && index < offset + STEP))
 	}
 
@@ -246,13 +249,66 @@ const generateCards = scrolling => {
 
 	if (!results) return
 
-	if (!filteredData.length) {
-		structure = scrolling ? '' : 'Ничего не найдено'
-	} else {
-		filteredData.forEach(({ town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days }) => {
-			structure += `<li class="card">
-				<div class="card-inner">
-				<div class="card-left">
+	if (!filteredData.length) structure = scrolling ? '' : 'Ничего не найдено'
+	else filteredData.forEach( card => structure += getCardStructure( card ) )
+
+	const showText = () => {
+		const hiddenTexts = document.querySelectorAll('.card-about')
+		const changeText = document.querySelector('.second.on')
+
+		hiddenTexts.forEach(text => {
+			text.addEventListener('click', () => {
+				if (!text.classList.contains('opened')) {
+					text.classList.add('opened')
+					changeText.innerHTML = "Скрыть"
+				} else {
+					text.classList.remove('opened')
+					changeText.innerHTML = "Показать"
+				}
+			})
+		})
+	}
+
+	if (scrolling) {
+		results.innerHTML += structure
+		showText()
+		showPopup()
+		showCardPopup()
+	}
+	else {
+		results.innerHTML = structure
+		showText()
+		showPopup()
+		showCardPopup()
+	}
+}
+
+/**
+ * Get HTML structure of the card.
+ *
+ * @param town
+ * @param dist
+ * @param metro
+ * @param tech
+ * @param name
+ * @param src
+ * @param skill
+ * @param address
+ * @param about
+ * @param done
+ * @param tel
+ * @param rate
+ * @param exp
+ * @param gar
+ * @param arrive
+ * @param workTime
+ * @param days
+ * @returns {string}	HTML structure of the card.
+ */
+const getCardStructure = ( { town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+	return `<li class="card">
+		<div class="card-inner">
+			<div class="card-left">
 				<div class="card-row">
 					<div class="card-col">
 						<div class="card-name"><span class="first">ФИО:</span><span class="second">${name}</span>
@@ -267,7 +323,7 @@ const generateCards = scrolling => {
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="span-wrapper-top"><span class="first">Метро:</span><span class="second">${metro}</span></div>
+						<div class="span-wrapper-top"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
 					</div>
 					<div class="card-col">
 						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span>
@@ -324,49 +380,18 @@ const generateCards = scrolling => {
 					</div>
 				</div>
 			</div>
-				<div class="card-photo">
-					<img class="card-avatar" src="${src}" width="300" height="300" alt="">
-					<p class="master-rate">
-						Рейтинг: ${rate}
-						<img src="img/cards/star.png" width="15" height="15" alt="">
-					</p>
-					<p class="done">
-						Выполнено работ: ${done}
-					</p>
-				</div>
-			</li>`
-		})
-	}
-
-	const showText = () => {
-		const hiddenTexts = document.querySelectorAll('.card-about')
-		const changeText = document.querySelector('.second.on')
-
-		hiddenTexts.forEach(text => {
-			text.addEventListener('click', () => {
-				if (!text.classList.contains('opened')) {
-					text.classList.add('opened')
-					changeText.innerHTML = "Скрыть"
-				} else {
-					text.classList.remove('opened')
-					changeText.innerHTML = "Показать"
-				}
-			})
-		})
-	}
-
-	if (scrolling) {
-		results.innerHTML += structure
-		showText()
-		showPopup()
-		showCardPopup()
-	}
-	else {
-		results.innerHTML = structure
-		showText()
-		showPopup()
-		showCardPopup()
-	}
+			<div class="card-photo">
+				<img class="card-avatar" src="${src}" width="300" height="300" alt="">
+				<p class="master-rate">
+					Рейтинг: ${rate}
+					<img src="img/cards/star.png" width="15" height="15" alt="">
+				</p>
+				<p class="done">
+					Выполнено работ: ${done}
+				</p>
+			</div>
+		</div>
+	</li>`
 }
 
 window.addEventListener('scroll', () => {
