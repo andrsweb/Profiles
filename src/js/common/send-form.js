@@ -33,19 +33,18 @@ const submitForm = ( selector ) => {
 				if( request.status === 200 ){
 					if( request.response.success ){
 
-						if( formType == 'admin-form' ) {
+						if( formType === 'admin-form' ) {
 							formResponse.textContent = 'Анкета отправлена'
+							form.reset()
 							setTimeout(() => {
 								formResponse.textContent = ''
-								form.reset()
 							}, 4000);
-						}
-
-						if( formType !== 'admin-form') {
+						} else {
 							form.classList.add( 'success' )
 							form.classList.remove( 'error' )
 							form.innerHTML = request.response.message
 						}
+
 					}	else {
 						formResponse.classList.remove( 'success' )
 						formResponse.classList.add( 'error' )
