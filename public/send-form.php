@@ -95,7 +95,7 @@ function get_data(){
 			'days'		=> $days,
 			'gar'		=> $gar,
 			'workTime'	=> $workTime,
-			'approved'	=> is_admin() ? '0' : '1'
+			'approved'	=> is_admin() ? '1' : '0'
 		];
 		$array_data[]	= $extra;
 		$data_to_write	= json_encode( $array_data, JSON_UNESCAPED_UNICODE );
