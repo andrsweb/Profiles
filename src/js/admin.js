@@ -1,3 +1,3 @@
 import './common/common'
 import './common/send-form'
-import './admin-filters'
+import './admin/admin-filters'
