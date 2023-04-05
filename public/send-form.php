@@ -40,24 +40,23 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 }
 
 function get_data(){
-	$is_admin	= $_POST['admin'];
-	$name		= $_POST['full-name'];
-	$town		= $_POST['town'];
-	$metro		= $_POST['metro'];
-	$tech		= $_POST['tech'];
-	$dist		= $_POST['dist'];
-	$src		= $_POST['src'];
-	$address	= $_POST['address'];
-	$skill	    = $_POST['skill'];
-	$about	    = $_POST['about'];
-	$rate	    = $_POST['rate'];
-	$done	    = $_POST['done'];
-	$tel	    = $_POST['tel'];
-	$exp	    = $_POST['exp'];
-	$arr	    = $_POST['arrive'];
-	$days	    = $_POST['days'];
-	$gar	    = $_POST['gar'];
-	$workTime	= $_POST['workTime'];
+	$is_admin	= as_clean_value( $_POST['admin'] );
+	$name		= as_clean_value( $_POST['full-name'] );
+	$town		= as_clean_value( $_POST['town'] );
+	$metro		= as_clean_value( $_POST['metro'] );
+	$tech		= as_clean_value( $_POST['tech'] );
+	$dist		= as_clean_value( $_POST['dist'] );
+	$address	= as_clean_value( $_POST['address'] );
+	$skill	    = as_clean_value( $_POST['skill'] );
+	$about	    = as_clean_value( $_POST['about'] );
+	$rate	    = as_clean_value( $_POST['rate'] );
+	$done	    = as_clean_value( $_POST['done'] );
+	$tel	    = as_clean_value( $_POST['tel'] );
+	$exp	    = as_clean_value( $_POST['exp'] );
+	$arr	    = as_clean_value( $_POST['arrive'] );
+	$days	    = as_clean_value( $_POST['days'] );
+	$gar	    = as_clean_value( $_POST['gar'] );
+	$workTime	= as_clean_value( $_POST['workTime'] );
 	$file_name	= 'data/data.json';
 
 	if( $is_admin && ! is_admin() ){
@@ -90,6 +89,43 @@ function get_data(){
 		}
 	}
 
+	// If avatar uploaded.
+	if( isset( $_FILES['src']['size'] ) && $_FILES['src']['size'] > 0 ){
+		// Conditions for avatar: ( png | jpg | jpeg ) and < 1 MB.
+		$allowed_image_types	= ['image/jpeg', 'image/png'];
+		$max_image_size			= 1000000;
+		$src_name				= $_FILES['src']['name'];
+		$image_path				= "img/cards/{$src_name}";
+		$src_temp				= $_FILES['src']['tmp_name'];
+
+		// Check conditions for avatar.
+		if( ! in_array( $_FILES['src']['type'], $allowed_image_types ) || ( int ) $_FILES['src']['size'] > $max_image_size ){
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Пожалуйста, загружайте картинку до 1Мб формата JPG | JPEG | PNG.'
+			] );
+			die();
+		}
+
+		// If avatar uploaded successfully.
+		if( is_uploaded_file( $src_temp ) ){
+			// If not saved.
+			if( ! move_uploaded_file( $src_temp, $image_path ) ){
+				echo json_encode( [
+					'success'	=> 0,
+					'message'	=> 'Ошибка - изображение не сохранено.'
+				] );
+				die();
+			}
+		}	else {	// Upload error.
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Ошибка загрузки изображения.'
+			] );
+			die();
+		}
+	}
+
 	$new_card = [
 		'id'		=> time() . '.' . rand( 0, 99999 ) . '.' . rand( 0, 99999 ),
 		'name'		=> $name,
@@ -97,12 +133,12 @@ function get_data(){
 		'metro'		=> $metro,
 		'tech'		=> $tech,
 		'dist'		=> $dist,
-		'src'		=> $src ?: '',
+		'src'		=> $image_path ?? '',
 		'address'	=> $address,
 		'skill'		=> $skill,
 		'about'		=> $about,
-		'rate'		=> $rate ?: '',
-		'done'		=> $done ?: '',
+		'rate'		=> $rate ?: '0',
+		'done'		=> $done ?: '0',
 		'tel'		=> $tel,
 		'exp'		=> $exp,
 		'arrive'	=> $arr,
@@ -146,7 +182,7 @@ function approve_card(){
 		die();
 	}
 
-	$card_id	= $_POST['id'];
+	$card_id	= as_clean_value( $_POST['id'] );
 	$file_name	= 'data/data.json';
 
 	// No card ID, nothing to approve.
@@ -206,7 +242,7 @@ function delete_card(){
 		die();
 	}
 
-	$card_id	= $_POST['id'];
+	$card_id	= as_clean_value( $_POST['id'] );
 	$file_name	= 'data/data.json';
 
 	// No card ID, nothing to approve.
@@ -232,7 +268,14 @@ function delete_card(){
 	$result			= [];
 
 	foreach( $array_data as $item ){
-		if( $item['id'] !== $card_id ) $result[] = $item;
+		if( $item['id'] !== $card_id ){
+			$result[] = $item;
+		}	else {
+			$avatar = $item['src'];
+
+			// Delete avatar of deleted card.
+			if( $avatar && file_exists( $avatar ) ) unlink( $avatar );
+		}
 	}
 
 	$data_to_write = json_encode( $result, JSON_UNESCAPED_UNICODE );

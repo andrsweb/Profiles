@@ -1,4 +1,5 @@
-.popup-wrapper, .card-popup-wrapper {
+.popup-wrapper,
+.card-popup-wrapper {
 	position:fixed;
 	display:none;
 	align-items:center;
@@ -15,7 +16,8 @@
 		display: flex;
 	}
 
-	.popup, .card-popup {
+	.popup,
+	.card-popup {
 		position: relative;
 		width: 100%;
 		display: flex;
@@ -37,6 +39,7 @@
 		fieldset {
 			display: flex;
 			flex-direction: row;
+			flex-wrap: wrap;
 			align-items: flex-start;
 		}
 
@@ -89,7 +92,8 @@
 	}
 }
 
-.success, .error {
+.success,
+.error {
 	color: $white;
 	text-align: center;
 	margin-top: 5px;
@@ -134,31 +138,35 @@
 .popup {
 	animation: scale1 1s ease forwards;
 
-		@keyframes scale1 {
-			0% {
-				scale: 0;
-				transform: rotate( 180deg );
-			}
-
-			100% {
-				scale: 1;
-				transform: rotate( 0 );
-			}
+	@keyframes scale1 {
+		0% {
+			scale: 0;
+			transform: rotate( 180deg );
 		}
+
+		100% {
+			scale: 1;
+			transform: rotate( 0 );
+		}
+	}
 }
 
 .card-popup {
 	animation: scale2 1s ease forwards;
 
-		@keyframes scale2 {
-			0% {
-				scale: 0;
-				transform: rotate( 180deg );
-			}
-
-			100% {
-				scale: 1;
-				transform: rotate( 0 );
-			}
+	@keyframes scale2 {
+		0% {
+			scale: 0;
+			transform: rotate( 180deg );
 		}
+
+		100% {
+			scale: 1;
+			transform: rotate( 0 );
+		}
+	}
+}
+
+.popup-wide {
+	width: 100%
 }

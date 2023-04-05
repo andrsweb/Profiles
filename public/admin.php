@@ -58,7 +58,7 @@
 						setcookie( 'admin', $security_value, time() + 3600, '/' );	// Set cookie for 1 hour.
 						file_put_contents( 'security.txt', $security_value );
 						?>
-						<form class="cards-form" data-type="admin-form" data-admin="1">
+						<form class="cards-form" enctype="multipart/form-data" data-type="admin-form" data-admin="1">
 							<fieldset>
 								<div class="left">
 									<div class="hero-input">
@@ -149,9 +149,9 @@
 									</div>
 									<div class="hero-input">
 										<label for="src">
-											Изображение
+											Изображение (макс. 1Мб)
 										</label>
-										<input id="work-time" name="src" type="text" placeholder="img/cards/...">
+										<input id="src" name="src" type="file" />
 									</div>
 									<div class="hero-input">
 										<label for="rate">
