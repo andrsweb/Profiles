@@ -1,4 +1,3 @@
-
 <html>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +51,9 @@
 					$pass = $_GET['pass'];
 
 					if( $user === 'admin' && $pass === 'admin' ){
+						$security_value = time() . rand( 0, 999999 ) . rand( 0, 999999 );
+						setcookie( 'admin', $security_value, time() + 3600, '/' );	// Set cookie for 1 hour.
+						file_put_contents( 'security.txt', $security_value );
 						?>
 						<form class="cards-form" data-type="admin-form">
 							<fieldset>

@@ -3,7 +3,6 @@ let data = []
 document.addEventListener('DOMContentLoaded', () => {
 	'use strict'
 
-	// 1. Get & show all data.
 	getAllData().then( json => {
 		if( Array.isArray( json ) ){
 			data = json.filter( card => card.approved === '0' )
@@ -41,11 +40,14 @@ const generateCards = () => {
 
 	data.forEach( card => structure += getCardStructure( card ) )
 	results.innerHTML = structure
+	approveCard()
+	declineCard()
 }
 
 /**
  * Get HTML structure of the card.
  *
+ * @param id
  * @param town
  * @param dist
  * @param metro
@@ -65,8 +67,8 @@ const generateCards = () => {
  * @param days
  * @returns {string}	HTML structure of the card.
  */
-const getCardStructure = ( { town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
-	return `<li class="card">
+const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+	return `<li class="card" data-id="${ id }">
 		<div class="card-inner">
 			<div class="card-left">
 				<div class="card-row">
@@ -133,6 +135,10 @@ const getCardStructure = ( { town, dist, metro, tech, name, src, skill, address,
 							Телефон:</span>${tel}
 						</a>
 					</div>
+					<div class="card-col">
+						<button class="button admin-approve-card">Одобрить</button>
+						<button class="button admin-delete-card">Удалить</button>
+					</div>
 				</div>
 			</div>
 			<div class="card-photo">
@@ -147,4 +153,82 @@ const getCardStructure = ( { town, dist, metro, tech, name, src, skill, address,
 			</div>
 		</div>
 	</li>`
+}
+
+/**
+ * Approve card as Admin.
+ */
+const approveCard = () => {
+	const buttons = document.querySelectorAll( '.admin-approve-card' )
+
+	if( ! buttons.length ) return
+
+	buttons.forEach( button => {
+		button.addEventListener( 'click', e => {
+			e.preventDefault()
+
+			if( ! confirm( 'Действительно одобрить?' ) ) return
+
+			const
+				card		= button.closest( '.card' ),
+				cardId		= card.dataset.id || '',
+				request		= new XMLHttpRequest(),
+				formData	= new FormData()
+
+			formData.append( 'func', 'approve-card' )
+			formData.append( 'id', cardId )
+			request.open( 'post', 'send-form.php', true )
+			request.responseType = 'json'
+
+			request.addEventListener( 'load', () => {
+				if( request.status === 200 ){
+					if( request.response.success ) card.remove()
+					else console.error( request.response.message )
+				}	else {
+					console.error( request.response )
+				}
+			} )
+
+			request.send( formData )
+		} )
+	} )
+}
+
+/**
+ * Decline card as Admin.
+ */
+const declineCard = () => {
+	const buttons = document.querySelectorAll( '.admin-delete-card' )
+
+	if( ! buttons.length ) return
+
+	buttons.forEach( button => {
+		button.addEventListener( 'click', e => {
+			e.preventDefault()
+
+			if( ! confirm( 'Действительно удалить?' ) ) return
+
+			const
+				card		= button.closest( '.card' ),
+				cardId		= card.dataset.id || '',
+				request		= new XMLHttpRequest(),
+				formData	= new FormData()
+
+			formData.append( 'func', 'delete-card' )
+			formData.append( 'id', cardId )
+			request.open( 'post', 'send-form.php', true )
+			request.responseType = 'json'
+
+			request.addEventListener( 'load', () => {
+				if( request.status === 200 ){
+					if( request.response.success ) card.remove()
+					else console.error( request.response.message )
+				}	else {
+					console.error( request.response )
+				}
+			} )
+
+			request.send( formData )
+		} )
+	} )
 }

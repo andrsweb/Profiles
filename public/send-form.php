@@ -29,12 +29,20 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 			get_data();
 			break;
 
+		case 'approve-card':
+			approve_card();
+			break;
+
+		case 'delete-card':
+			delete_card();
+			break;
+
 		default:
 			as_send_header_form();
 	}
 }
 
-function get_data() {
+function get_data(){
 	$name		= $_POST['full-name'];
 	$town		= $_POST['town'];
 	$metro		= $_POST['metro'];
@@ -87,7 +95,7 @@ function get_data() {
 			'days'		=> $days,
 			'gar'		=> $gar,
 			'workTime'	=> $workTime,
-			'approved'	=> 0
+			'approved'	=> is_admin() ? '1' : '0'
 		];
 		$array_data[]	= $extra;
 		$data_to_write	= json_encode( $array_data, JSON_UNESCAPED_UNICODE );
@@ -111,7 +119,7 @@ function get_data() {
 			'days'		=> $days,
 			'gar'		=> $gar,
 			'workTime'	=> $workTime,
-			'approved'	=> 0
+			'approved'	=> is_admin() ? '1' : '0'
 		]];
 		$data_to_write = json_encode( $datae, JSON_UNESCAPED_UNICODE );
 	}
@@ -126,6 +134,141 @@ function get_data() {
 			'success'	=> 0,
 			'message'	=> 'Ошибка отправки. Пожалуйста, попробуйте позже.'
 		] );	// Failed.
+}
+
+/**
+ * Approve card as Admin.
+ *
+ * @return void
+ */
+function approve_card(){
+	if( ! is_admin() ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Несанкционированный доступ. У Вас нет права совершать это действие.'
+		] );
+		die();
+	}
+
+	$card_id	= $_POST['id'];
+	$file_name	= 'data/data.json';
+
+	// No card ID, nothing to approve.
+	if( ! $card_id ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'ID не получен.'
+		] );
+		die();
+	}
+
+	// File with data is missing.
+	if( ! file_exists( $file_name ) ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Хранилище данных отсутствует.'
+		] );
+		die();
+	}
+
+	$current_data	= file_get_contents( $file_name );
+	$array_data		= json_decode( $current_data, true );
+
+	// Find data row with the same ID and set 'approved' = 1.
+	foreach( $array_data as $key => $item ){
+		if( $item['id'] === $card_id ){
+			$array_data[$key]['approved'] = '1';
+			break;
+		}
+	}
+
+	$data_to_write = json_encode( $array_data, JSON_UNESCAPED_UNICODE );
+
+	if( file_put_contents( $file_name, $data_to_write ) )
+		echo json_encode( [
+			'success'	=> 1,
+			'message'	=> 'Анкета одобрена'
+		] );	// Success.
+	else
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Ошибка записи данных. Пожалуйста, попробуйте позже.'
+		] );	// Failed.
+}
+
+/**
+ * Delete card as Admin.
+ *
+ * @return void
+ */
+function delete_card(){
+	if( ! is_admin() ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Несанкционированный доступ. У Вас нет права совершать это действие.'
+		] );
+		die();
+	}
+
+	$card_id	= $_POST['id'];
+	$file_name	= 'data/data.json';
+
+	// No card ID, nothing to approve.
+	if( ! $card_id ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'ID не получен.'
+		] );
+		die();
+	}
+
+	// File with data is missing.
+	if( ! file_exists( $file_name ) ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Хранилище данных отсутствует.'
+		] );
+		die();
+	}
+
+	$current_data	= file_get_contents( $file_name );
+	$array_data		= json_decode( $current_data, true );
+	$result			= [];
+
+	foreach( $array_data as $item ){
+		if( $item['id'] !== $card_id ) $result[] = $item;
+	}
+
+	$data_to_write = json_encode( $result, JSON_UNESCAPED_UNICODE );
+
+	if( file_put_contents( $file_name, $data_to_write ) )
+		echo json_encode( [
+			'success'	=> 1,
+			'message'	=> 'Анкета отклонена'
+		] );	// Success.
+	else
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Ошибка записи данных. Пожалуйста, попробуйте позже.'
+		] );	// Failed.
+}
+
+/**
+ * Check if this is Admin user.
+ *
+ * @return bool
+ */
+function is_admin(): bool
+{
+	// No admin cookie.
+	if( ! $admin_value = $_COOKIE['admin'] ) return false;
+
+	$security_value = file_get_contents( 'security.txt' );
+
+	// Admin cookie not equal to security value in file.
+	if( $admin_value !== $security_value ) return false;
+
+	return true;
 }
 
 function as_send_header_form(){
@@ -162,7 +305,6 @@ function as_send_card_form(){
 	as_send_email( 'Заявка', $message );
 }
 
-
 function as_send_email( string $subject, string $message ){
 	$result = mail('golden-web@mail.ru', $subject, $message );
 
@@ -176,6 +318,10 @@ function as_send_email( string $subject, string $message ){
 			'success'	=> 0,
 			'message'	=> 'Ошибка отправки. Пожалуйста, попробуйте позже.'
 		] );	// Failed.
+}
+
+function print_smth( $smth ){
+	echo '<pre>' . print_r( $smth, 1 ) . '</pre>';
 }
 
 die();

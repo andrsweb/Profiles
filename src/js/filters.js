@@ -286,6 +286,7 @@ const generateCards = scrolling => {
 /**
  * Get HTML structure of the card.
  *
+ * @param id
  * @param town
  * @param dist
  * @param metro
@@ -305,8 +306,8 @@ const generateCards = scrolling => {
  * @param days
  * @returns {string}	HTML structure of the card.
  */
-const getCardStructure = ( { town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
-	return `<li class="card">
+const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+	return `<li class="card" data-id="${ id }">
 		<div class="card-inner">
 			<div class="card-left">
 				<div class="card-row">

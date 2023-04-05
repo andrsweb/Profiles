@@ -1,0 +1,31 @@
+.button {
+	cursor: pointer;
+	background: transparent;
+	border: 1px solid $black;
+	border-radius: 5px;
+	padding: 5px 10px;
+	transition:
+		color ease-out $tr,
+		background-color ease-out $tr;
+
+	&:hover {
+		color: $white;
+		background-color: $black
+	}
+}
+
+.admin-approve-card {
+	margin-right: 10px
+}
+
+.admin-delete-card {
+	background-color: $accent;
+	color: $white;
+	border-color: $accent;
+	transition: opacity ease-out $tr;
+
+	&:hover {
+		background-color: $accent;
+		opacity: 0.7
+	}
+}
