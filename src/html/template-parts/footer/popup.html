@@ -1,15 +1,28 @@
 <section class="popup-wrapper" id="body-lock">
 	<div class="popup">
-		<form class="form" data-type="header-form">
+		<form class="form" data-type="send-card">
+			<legend>
+				Добавить анкету
+			</legend>
 			<fieldset>
-				<legend>
-					Добавить анкету
-				</legend>
-				<input class="form-input" name="name" type="text" placeholder="ФИО">
-				<input class="form-input" name="age" type="text" placeholder="Возраст">
-				<input class="form-input" name="tel" type="tel" placeholder="Телефон">
-				<input class="form-input" name="email" type="email" placeholder="Почта">
-				<textarea name="text" type="text" placeholder="Умею ремонтировать"></textarea>
+				<div class="popup-left">
+					<input class="form-input" name="full-name" type="text" placeholder="ФИО">
+					<input class="form-input" name="town" type="text" placeholder="Город">
+					<input class="form-input" name="metro" type="text" placeholder="Метро">
+					<input class="form-input" name="address" type="text" placeholder="Адрес">
+					<input class="form-input" name="tech" type="text" placeholder="Услуги">
+					<input class="form-input" name="dist" type="text" placeholder="Район">
+					<input class="form-input" name="skill" type="text" placeholder="Умею делать">
+				</div>
+				<div class="popup-right">
+					<input class="form-input" name="exp" type="text" placeholder="Опыт">
+					<input class="form-input" name="arrive" type="text" placeholder="Выезд">
+					<input class="form-input" name="days" type="text" placeholder="Дни работы">
+					<input class="form-input" name="gar" type="text" placeholder="Гарантия">
+					<input class="form-input" name="workTime" type="text" placeholder="Рабочее время">
+					<input class="form-input" name="tel" type="tel" placeholder="Телефон">
+					<input class="form-input" name="about" type="text" placeholder="Кратко о себе">
+				</div>
 			</fieldset>
 			<div class="popup-btn-wrapper">
 				<button class="form-button" type="submit">

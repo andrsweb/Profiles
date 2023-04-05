@@ -17,8 +17,8 @@ function as_clean_value( $value )
 
 if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 	switch( $_POST['func'] ){
-		case 'header-form':
-			as_send_header_form();
+		case 'send-card':
+			get_data();
 			break;
 
 		case 'card-form':
@@ -62,16 +62,16 @@ function get_data(){
 	$workTime	= $_POST['workTime'];
 	$file_name	= 'data/data.json';
 
-	if(
-		! $name || ! $town || ! $metro || ! $tech || ! $dist || ! $address || ! $skill || ! $about
-		|| ! $rate || ! $done || ! $tel || ! $exp || ! $arr || ! $days || ! $gar || ! $workTime
-	){
-		echo json_encode( [
-			'success'	=> 0,
-			'message'	=> 'Пожалуйста, заполните все необходимые поля.'
-		] );
-		die();
-	}
+	// if(
+	// 	! $name || ! $town || ! $metro || ! $tech || ! $dist || ! $address || ! $skill || ! $about
+	// 	|| ! $rate || ! $done || ! $tel || ! $exp || ! $arr || ! $days || ! $gar || ! $workTime
+	// ){
+	// 	echo json_encode( [
+	// 		'success'	=> 0,
+	// 		'message'	=> 'Пожалуйста, заполните все необходимые поля.'
+	// 	] );
+	// 	die();
+	// }
 
 	if( file_exists( $file_name ) ){
 		$current_data	= file_get_contents( $file_name );
@@ -95,7 +95,7 @@ function get_data(){
 			'days'		=> $days,
 			'gar'		=> $gar,
 			'workTime'	=> $workTime,
-			'approved'	=> is_admin() ? '1' : '0'
+			'approved'	=> is_admin() ? '0' : '1'
 		];
 		$array_data[]	= $extra;
 		$data_to_write	= json_encode( $array_data, JSON_UNESCAPED_UNICODE );
