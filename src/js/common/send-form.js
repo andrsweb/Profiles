@@ -19,9 +19,11 @@ const submitForm = ( selector ) => {
 				formResponse	= form.querySelector( '.form-response' ),
 				request			= new XMLHttpRequest(),
 				formData		= new FormData( form ),
-				formType		= form.dataset.type
+				formType		= form.dataset.type,
+				isAdmin			= form.dataset.admin || ''
 
 			formData.append( 'func', formType )
+			formData.append( 'admin', isAdmin )
 			request.open( 'post', 'send-form.php', true )
 			request.responseType = 'json'
 

@@ -18,15 +18,12 @@ function as_clean_value( $value )
 if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 	switch( $_POST['func'] ){
 		case 'send-card':
+		case 'admin-form':
 			get_data();
 			break;
 
 		case 'card-form':
 			as_send_card_form();
-			break;
-
-		case 'admin-form':
-			get_data();
 			break;
 
 		case 'approve-card':
@@ -43,6 +40,7 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 }
 
 function get_data(){
+	$is_admin	= $_POST['admin'];
 	$name		= $_POST['full-name'];
 	$town		= $_POST['town'];
 	$metro		= $_POST['metro'];
@@ -62,69 +60,67 @@ function get_data(){
 	$workTime	= $_POST['workTime'];
 	$file_name	= 'data/data.json';
 
-	// if(
-	// 	! $name || ! $town || ! $metro || ! $tech || ! $dist || ! $address || ! $skill || ! $about
-	// 	|| ! $rate || ! $done || ! $tel || ! $exp || ! $arr || ! $days || ! $gar || ! $workTime
-	// ){
-	// 	echo json_encode( [
-	// 		'success'	=> 0,
-	// 		'message'	=> 'Пожалуйста, заполните все необходимые поля.'
-	// 	] );
-	// 	die();
-	// }
+	if( $is_admin && ! is_admin() ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Ошибка - попытка публикации от имени Администратора.'
+		] );
+		die();
+	}
+
+	if(
+		! $name || ! $town || ! $metro || ! $tech || ! $dist || ! $address || ! $skill
+		|| ! $about || ! $tel || ! $exp || ! $arr || ! $days || ! $gar || ! $workTime
+	){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Пожалуйста, заполните все необходимые поля.'
+		] );
+		die();
+	}
+
+	// If form was sent from the Admin page - check more fields.
+	if( $is_admin ){
+		if( ! $rate || ! $done ){
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Пожалуйста, заполните все необходимые поля.'
+			] );
+			die();
+		}
+	}
+
+	$new_card = [
+		'id'		=> time() . '.' . rand( 0, 99999 ) . '.' . rand( 0, 99999 ),
+		'name'		=> $name,
+		'town'		=> $town,
+		'metro'		=> $metro,
+		'tech'		=> $tech,
+		'dist'		=> $dist,
+		'src'		=> $src ?: '',
+		'address'	=> $address,
+		'skill'		=> $skill,
+		'about'		=> $about,
+		'rate'		=> $rate ?: '',
+		'done'		=> $done ?: '',
+		'tel'		=> $tel,
+		'exp'		=> $exp,
+		'arrive'	=> $arr,
+		'days'		=> $days,
+		'gar'		=> $gar,
+		'workTime'	=> $workTime,
+		'approved'	=> ( $is_admin && is_admin() ) ? '1' : '0'
+	];
 
 	if( file_exists( $file_name ) ){
 		$current_data	= file_get_contents( $file_name );
 		$array_data		= json_decode( $current_data, true );
-		$extra			= [
-			'id'		=> time() . '.' . rand( 0, 99999 ) . '.' . rand( 0, 99999 ),
-			'name'		=> $name,
-			'town'		=> $town,
-			'metro'		=> $metro,
-			'tech'		=> $tech,
-			'dist'		=> $dist,
-			'src'		=> $src,
-			'address'	=> $address,
-			'skill'		=> $skill,
-			'about'		=> $about,
-			'rate'		=> $rate,
-			'done'		=> $done,
-			'tel'		=> $tel,
-			'exp'		=> $exp,
-			'arrive'	=> $arr,
-			'days'		=> $days,
-			'gar'		=> $gar,
-			'workTime'	=> $workTime,
-			'approved'	=> is_admin() ? '1' : '0'
-		];
-		$array_data[]	= $extra;
-		$data_to_write	= json_encode( $array_data, JSON_UNESCAPED_UNICODE );
+		$array_data[]	= $new_card;
 	}	else {
-		$datae = [[
-			'id'		=> time() . '.' . rand( 0, 99999 ) . '.' . rand( 0, 99999 ),
-			'name'		=> $name,
-			'town'		=> $town,
-			'metro'		=> $metro,
-			'tech'		=> $tech,
-			'dist'		=> $dist,
-			'src'		=> $src,
-			'address'	=> $address,
-			'skill'		=> $skill,
-			'about'		=> $about,
-			'rate'		=> $rate,
-			'done'		=> $done,
-			'tel'		=> $tel,
-			'exp'		=> $exp,
-			'arrive'	=> $arr,
-			'days'		=> $days,
-			'gar'		=> $gar,
-			'workTime'	=> $workTime,
-			'approved'	=> is_admin() ? '1' : '0'
-		]];
-		$data_to_write = json_encode( $datae, JSON_UNESCAPED_UNICODE );
+		$array_data = [ $new_card ];
 	}
 
-	if( file_put_contents( $file_name, $data_to_write ) )
+	if( file_put_contents( $file_name, json_encode( $array_data, JSON_UNESCAPED_UNICODE ) ) )
 		echo json_encode( [
 			'success'	=> 1,
 			'message'	=> 'Анкета отправлена'

@@ -52,10 +52,13 @@
 
 					if( $user === 'admin' && $pass === 'admin' ){
 						$security_value = time() . rand( 0, 999999 ) . rand( 0, 999999 );
+
+						if( isset( $_COOKIE['admin'] ) ) setcookie( 'admin', '', time() - 3600, '/' );
+
 						setcookie( 'admin', $security_value, time() + 3600, '/' );	// Set cookie for 1 hour.
 						file_put_contents( 'security.txt', $security_value );
 						?>
-						<form class="cards-form" data-type="admin-form">
+						<form class="cards-form" data-type="admin-form" data-admin="1">
 							<fieldset>
 								<div class="left">
 									<div class="hero-input">
