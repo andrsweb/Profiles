@@ -85,37 +85,37 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="span-wrapper-top"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
+						<div class="card-metro"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
 					</div>
 					<div class="card-col">
 						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span>
 						</div>
 					</div>
 					<div class="card-col">
-						<div class="card-tech"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
+						<div class="card-address"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
 					</div>
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="card-tech"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
+						<div class="card-skill"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
 					</div>
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Опыт:</span><span class="second">${exp}
+						<div class="card-exp"><span class="first">Опыт:</span><span class="second">${exp}
 							</span></div>
 					</div>
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
+						<div class="card-gar"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
 					</div>
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
+						<div class="card-arrive"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
 					</div>
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
+						<div class="card-worktime"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
 					</div>
 					<div class="card-col">
-						<div class="card-tech"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
+						<div class="card-days"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
 					</div>
 				</div>
 				<div class="card-row">
@@ -130,9 +130,8 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						</div>
 					</div>
 					<div class="card-col">
-						<a href="tel:${tel}" class="master-tel">
-							<span class="first">
-							Телефон:</span>${tel}
+						<a href="tel:${tel}" class="card-tel master-tel">
+							<span class="first">Телефон:</span><span class="second">${tel}</span>
 						</a>
 					</div>
 					<div class="card-col">
@@ -143,12 +142,12 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 			</div>
 			<div class="card-photo">
 				<img class="card-avatar" src="${src}" width="300" height="300" alt="">
-				<p class="master-rate">
-					Рейтинг: ${rate}
+				<p class="master-rate card-rate">
+					Рейтинг: <span>${rate}</span>
 					<img src="img/cards/star.png" width="15" height="15" alt="">
 				</p>
-				<p class="done">
-					Выполнено работ: ${done}
+				<p class="done card-done">
+					Выполнено работ: <span>${done}</span>
 				</p>
 			</div>
 		</div>

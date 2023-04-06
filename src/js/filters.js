@@ -276,6 +276,7 @@ const generateCards = scrolling => {
 	showPopup()
 	showCardPopup()
 	declineCard()
+	showEditCardPopup()
 }
 
 /**
@@ -304,7 +305,9 @@ const generateCards = scrolling => {
 const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
 	const
 		isAdmin			= document.body.classList.contains( 'user-admin' ),
-		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : ''
+		contactButton	= isAdmin ? '' : '<button class="card-button">Оставить заявку</button>',
+		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : '',
+		editButton		= isAdmin ? '<button class="button admin-edit-card popup-button">Редактировать</button>' : ''
 
 	return `<li class="card" data-id="${ id }">
 		<div class="card-inner">
@@ -323,37 +326,37 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="span-wrapper-top"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
+						<div class="card-metro"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
 					</div>
 					<div class="card-col">
 						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span>
 						</div>
 					</div>
 					<div class="card-col">
-						<div class="card-tech"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
+						<div class="card-address"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
 					</div>
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="card-tech"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
+						<div class="card-skill"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
 					</div>
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Опыт:</span><span class="second">${exp}
+						<div class="card-exp"><span class="first">Опыт:</span><span class="second">${exp}
 							</span></div>
 					</div>
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
+						<div class="card-gar"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
 					</div>
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
+						<div class="card-arrive"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
 					</div>
 					<div class="card-col">
-						<div class="span-wrapper"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
+						<div class="card-worktime"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
 					</div>
 					<div class="card-col">
-						<div class="card-tech"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
+						<div class="card-days"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
 					</div>
 				</div>
 				<div class="card-row">
@@ -368,27 +371,25 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						</div>
 					</div>
 					<div class="card-col">
-							<a href="tel:${tel}" class="master-tel">
-								<span class="first">
-								Телефон:</span>${tel}
-							</a>
+						<a href="tel:${tel}" class="master-tel card-tel">
+							<span class="first">Телефон:</span><span class="second">${tel}</span>
+						</a>
 					</div>
 					<div class="card-col">
-						<button class="card-button">
-							Оставить заявку
-						</button>
+						${ contactButton }
+						${ editButton }
 						${ deleteButton }
 					</div>
 				</div>
 			</div>
 			<div class="card-photo">
 				<img class="card-avatar" src="${src}" width="300" height="300" alt="">
-				<p class="master-rate">
-					Рейтинг: ${rate}
+				<p class="master-rate card-rate">
+					Рейтинг: <span>${rate}</span>
 					<img src="img/cards/star.png" width="15" height="15" alt="">
 				</p>
-				<p class="done">
-					Выполнено работ: ${done}
+				<p class="done card-done">
+					Выполнено работ: <span>${done}</span>
 				</p>
 			</div>
 		</div>
@@ -480,6 +481,95 @@ const declineCard = () => {
 			} )
 
 			request.send( formData )
+		} )
+	} )
+}
+
+const showEditCardPopup = () => {
+	const
+		buttons	= document.querySelectorAll( '.admin-edit-card' ),
+		form	= document.querySelector( 'form[data-type="send-card"]' )
+
+	if( ! buttons.length || ! form ) return
+
+	const
+		formFullName	= form.querySelector( 'input[name="full-name"]' ),
+		formTown		= form.querySelector( 'input[name="town"]' ),
+		formMetro		= form.querySelector( 'input[name="metro"]' ),
+		formAddress		= form.querySelector( 'input[name="address"]' ),
+		formTech		= form.querySelector( 'input[name="tech"]' ),
+		formDist		= form.querySelector( 'input[name="dist"]' ),
+		formSkill		= form.querySelector( 'input[name="full-name"]' ),
+		formExp			= form.querySelector( 'input[name="exp"]' ),
+		formArrive		= form.querySelector( 'input[name="arrive"]' ),
+		formDays		= form.querySelector( 'input[name="days"]' ),
+		formGar			= form.querySelector( 'input[name="gar"]' ),
+		formWorkTime	= form.querySelector( 'input[name="workTime"]' ),
+		formTel			= form.querySelector( 'input[name="tel"]' ),
+		formAbout		= form.querySelector( 'input[name="about"]' )
+
+	buttons.forEach( button => {
+		button.addEventListener( 'click', e => {
+			e.preventDefault()
+
+			const
+				card			= button.closest( '.card' ),
+				cardId			= card.dataset.id || '',
+				cardFullName	= card.querySelector( '.card-name .second' ).innerHTML.trim(),
+				cardTown		= card.querySelector( '.card-town .second' ).innerHTML.trim(),
+				cardMetro		= card.querySelector( '.card-metro .second' ).innerHTML.trim(),
+				cardAddress		= card.querySelector( '.card-address .second' ).innerHTML.trim(),
+				cardTech		= card.querySelector( '.card-tech .second' ).innerHTML.trim(),
+				cardDist		= card.querySelector( '.card-dist .second' ).innerHTML.trim(),
+				cardSkill		= card.querySelector( '.card-skill .second' ).innerHTML.trim(),
+				cardExp			= card.querySelector( '.card-exp .second' ).innerHTML.trim(),
+				cardArrive		= card.querySelector( '.card-arrive .second' ).innerHTML.trim(),
+				cardDays		= card.querySelector( '.card-days .second' ).innerHTML.trim(),
+				cardGar			= card.querySelector( '.card-gar .second' ).innerHTML.trim(),
+				cardWorkTime	= card.querySelector( '.card-worktime .second' ).innerHTML.trim(),
+				cardTel			= card.querySelector( '.card-tel .second' ).innerHTML.trim(),
+				cardAbout		= card.querySelector( '.card-about .card-info-inner' ).innerHTML.trim(),
+				cardRate		= card.querySelector( '.card-rate span' ).innerHTML.trim(),
+				cardDone		= card.querySelector( '.card-done span' ).innerHTML.trim()
+
+			form.setAttribute( 'data-card', cardId )	// Add data-attr to know what card is in editing now.
+			form.querySelector( 'legend' ).innerHTML = 'Редактировать анкету'	// Change legend text.
+			form.querySelector( '.popup-left' ).insertAdjacentHTML(
+				'beforeend',
+				`<input class="form-input" name="rate" type="text" placeholder="Рейтинг" value="${ cardRate || '' }" />`
+			)
+			form.querySelector( '.popup-right' ).insertAdjacentHTML(
+				'beforeend',
+				`<input class="form-input" name="done" type="text" placeholder="Сделано работ" value="${ cardDone || '' }" />`
+			)
+
+			if( formFullName && cardFullName ) formFullName.value = cardFullName
+
+			if( formTown && cardTown ) formTown.value = cardTown
+
+			if( formMetro && cardMetro ) formMetro.value = cardMetro
+
+			if( formAddress && cardAddress ) formAddress.value = cardAddress
+
+			if( formTech && cardTech ) formTech.value = cardTech
+
+			if( formDist && cardDist ) formDist.value = cardDist
+
+			if( formSkill && cardSkill ) formSkill.value = cardSkill
+
+			if( formExp && cardExp ) formExp.value = cardExp
+
+			if( formArrive && cardArrive ) formArrive.value = cardArrive
+
+			if( formDays && cardDays ) formDays.value = cardDays
+
+			if( formGar && cardGar ) formGar.value = cardGar
+
+			if( formWorkTime && cardWorkTime ) formWorkTime.value = cardWorkTime
+
+			if( formTel && cardTel ) formTel.value = cardTel
+
+			if( formAbout && cardAbout ) formAbout.value = cardAbout
 		} )
 	} )
 }
