@@ -11,5 +11,4 @@ require_once 'template-parts/admin/header/header.php';
 if( $is_admin ) require_once 'template-parts/admin/cards.php';
 
 require_once 'template-parts/admin/footer/footer.php';
-?>
 
