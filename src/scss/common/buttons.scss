@@ -12,6 +12,21 @@
 		color: $white;
 		background-color: $black
 	}
+
+	&.admin-edit-card.popup-button {
+		width: auto;
+		font-size: $fs-sm;
+		background: transparent;
+		border: 1px solid $black;
+		border-radius: 5px;
+		padding: 5px 10px;
+		margin-top: 0;
+
+		&:hover {
+			color: $white;
+			background-color: $black
+		}
+	}
 }
 
 .admin-approve-card {

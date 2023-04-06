@@ -485,6 +485,9 @@ const declineCard = () => {
 	} )
 }
 
+/**
+ * Show popup for card editing.
+ */
 const showEditCardPopup = () => {
 	const
 		buttons	= document.querySelectorAll( '.admin-edit-card' ),
@@ -534,14 +537,22 @@ const showEditCardPopup = () => {
 
 			form.setAttribute( 'data-card', cardId )	// Add data-attr to know what card is in editing now.
 			form.querySelector( 'legend' ).innerHTML = 'Редактировать анкету'	// Change legend text.
-			form.querySelector( '.popup-left' ).insertAdjacentHTML(
-				'beforeend',
-				`<input class="form-input" name="rate" type="text" placeholder="Рейтинг" value="${ cardRate || '' }" />`
-			)
-			form.querySelector( '.popup-right' ).insertAdjacentHTML(
-				'beforeend',
-				`<input class="form-input" name="done" type="text" placeholder="Сделано работ" value="${ cardDone || '' }" />`
-			)
+
+			// Add rate field.
+			if( ! form.querySelector( 'input[name="rate"]' ) ){
+				form.querySelector( '.popup-left' ).insertAdjacentHTML(
+					'beforeend',
+					`<input class="form-input" name="rate" type="text" placeholder="Рейтинг" value="${ cardRate || '' }" />`
+				)
+			}
+
+			// Add done field.
+			if( ! form.querySelector( 'input[name="done"]' ) ){
+				form.querySelector( '.popup-right' ).insertAdjacentHTML(
+					'beforeend',
+					`<input class="form-input" name="done" type="text" placeholder="Сделано работ" value="${ cardDone || '' }" />`
+				)
+			}
 
 			if( formFullName && cardFullName ) formFullName.value = cardFullName
 
