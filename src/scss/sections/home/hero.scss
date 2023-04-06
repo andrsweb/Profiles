@@ -247,3 +247,10 @@ label {
 	justify-content: center;
 	align-items: center;
 }
+
+.image-input {
+	display: flex;
+	#src {
+		background-color: transparent;
+	}
+}

@@ -95,7 +95,7 @@
 							</label>
 							<input id="work-time" name="workTime" type="text">
 						</div>
-						<div class="hero-input">
+						<div class="hero-input image-input">
 							<label for="src">
 								Изображение (макс. 1Мб)
 							</label>

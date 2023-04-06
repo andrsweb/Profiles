@@ -168,5 +168,17 @@
 }
 
 .popup-wide {
-	width: 100%
+	width: 100%;
+	display: flex;
+	align-items: center;
+	font-size: 12px;
+
+	label {
+		width: auto;
+		color: $white;
+	}
+
+	#src {
+		background-color: transparent;
+	}
 }
