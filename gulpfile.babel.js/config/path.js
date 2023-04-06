@@ -4,9 +4,9 @@ const pathDest  = './public';
 export default {
 	root	: pathDest,
 
-	html	: {
-		src		: [pathSrc + '/html/*.html'],
-		watch	: pathSrc + '/html/**/*.html',
+	php	: {
+		src		: [pathSrc + '/html/**/*.php'],
+		watch	: pathSrc + '/html/**/*.php',
 		dest	: pathDest
 	},
 
@@ -36,7 +36,7 @@ export default {
 
 	del		: {
 		clean	: [
-			`${pathDest}/*.html`,
+			`${pathDest}/*.php`,
 			`${pathDest}/js/**/*`,
 			`${pathDest}/scss/**/*`,
 			`${pathDest}/img/**/*`

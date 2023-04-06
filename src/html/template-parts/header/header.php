@@ -1,3 +1,14 @@
+<?php
+
+$is_admin = '';
+
+if( $admin_value = $_COOKIE['admin'] ?? null ){
+	$security_value = file_get_contents( 'security.txt' );
+
+	if( $admin_value === $security_value ) $is_admin = ' class="user-admin"';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +26,10 @@
 	<meta name="msapplication-config" content="favicon/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">	
 	
-	<title>Добавить карточку</title>
+	<title>Частные мастера</title>
 	<link rel="stylesheet" href="css/main.min.css" />
 </head>
-<body class="admin-page">
+<body<?php echo $is_admin ?>>
 	<div class="wrapper">
 		<header class="header">
 			<div class="container">
@@ -31,8 +42,16 @@
 							Частные <br> мастера
 						</p>
 					</a>
-					<div class="admin-text">
-						Здесь вы можете добавить анкету мастера
+					<div class="header-ui">
+						<a class="header-tel" href="tel:+7999999999">
+							<span class="time">
+								Подобрать мастера. Круглосуточно
+							</span>
+							+7 (999) 999-99-99
+						</a>
+						<button class="popup-button">
+							Добавить анкету
+						</button>
 					</div>
 				</div>
 			</div>

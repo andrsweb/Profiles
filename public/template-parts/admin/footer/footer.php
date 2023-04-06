@@ -17,11 +17,12 @@
 							Компания "Частные мастера"
 						</div>
 					</div>
-					</div>
 				</div>
 			</div>
 		</footer>
 	</div><!-- .wrapper -->
-	<script src="js/main.min.js"></script>
+
+	<script src="js/admin/admin.min.js"></script>
 </body>
 </html>
+

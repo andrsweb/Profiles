@@ -15,7 +15,7 @@ import webpCss from 'gulp-webp-css'
 
 // Tasks.
 import clear from './tasks/clear'
-import html from './tasks/html'
+import php from './tasks/php'
 import js from './tasks/js'
 import jsAdmin from './tasks/js-admin'
 import img from './tasks/img'
@@ -57,7 +57,7 @@ const scss = () => {
 }
 
 const watcher = () => {
-	gulp.watch( path.html.watch, html ).on( 'all', browserSync.reload )
+	gulp.watch( path.php.watch, php ).on( 'all', browserSync.reload )
 	gulp.watch( path.scss.watch, scss )
 	gulp.watch( path.js.watch, js ).on( 'all', browserSync.reload )
 	gulp.watch( path.jsAdmin.watch, jsAdmin ).on( 'all', browserSync.reload )
@@ -66,7 +66,7 @@ const watcher = () => {
 
 const build = gulp.series(
 	clear,
-	gulp.parallel( html, scss, js, jsAdmin, img )
+	gulp.parallel( php, scss, js, jsAdmin, img )
 )
 
 const dev = gulp.series(

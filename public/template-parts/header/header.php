@@ -1,3 +1,14 @@
+<?php
+
+$is_admin = '';
+
+if( $admin_value = $_COOKIE['admin'] ?? null ){
+	$security_value = file_get_contents( 'security.txt' );
+
+	if( $admin_value === $security_value ) $is_admin = ' class="user-admin"';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +29,7 @@
 	<title>Частные мастера</title>
 	<link rel="stylesheet" href="css/main.min.css" />
 </head>
-<body>
+<body<?php echo $is_admin ?>>
 	<div class="wrapper">
 		<header class="header">
 			<div class="container">
