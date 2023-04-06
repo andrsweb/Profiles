@@ -1,3 +1,22 @@
+<?php
+
+$user = $_GET['user'];
+$pass = $_GET['pass'];
+
+if( $user === 'admin' && $pass === 'admin' ){
+	$security_value = time() . rand( 0, 999999 ) . rand( 0, 999999 );
+
+	if( isset( $_COOKIE['admin'] ) ) setcookie( 'admin', '', time() - 3600, '/' );
+
+	setcookie( 'admin', $security_value, time() + 3600, '/' );    // Set cookie for 1 hour.
+	file_put_contents( 'security.txt', $security_value );
+
+	$is_admin = ' user-admin';
+}	else {
+	$is_admin = '';
+}
+?>
+
 <html>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +38,7 @@
 	<title>Добавить карточку</title>
 	<link rel="stylesheet" href="css/main.min.css">
 </head>
-<body class="admin-page">
+<body class="admin-page<?php echo $is_admin ?>">
 	<div class="wrapper">
 		<header class="header">
 			<div class="container">
@@ -33,7 +52,10 @@
 						</p>
 					</a>
 					<div class="admin-text">
-						Здесь вы можете добавить анкету мастера
+						<?php
+						if( $is_admin ) echo 'Здесь вы можете добавить анкету мастера';
+						else echo 'У Вас нет прав для просмотра данной страницы';
+						?>
 					</div>
 				</div>
 			</div>
@@ -42,22 +64,12 @@
 		<main>
 			<section class="hero">
 				<div class="container">
-					<h1 class="admin-title">
-						Чтобы добавить анкету, заполните данные ниже
-					</h1>
-
 					<?php
-					$user = $_GET['user'];
-					$pass = $_GET['pass'];
-
-					if( $user === 'admin' && $pass === 'admin' ){
-						$security_value = time() . rand( 0, 999999 ) . rand( 0, 999999 );
-
-						if( isset( $_COOKIE['admin'] ) ) setcookie( 'admin', '', time() - 3600, '/' );
-
-						setcookie( 'admin', $security_value, time() + 3600, '/' );	// Set cookie for 1 hour.
-						file_put_contents( 'security.txt', $security_value );
+					if( $is_admin ){
 						?>
+						<h1 class="admin-title">
+							Чтобы добавить анкету, заполните данные ниже
+						</h1>
 						<form class="cards-form" enctype="multipart/form-data" data-type="admin-form" data-admin="1">
 							<fieldset>
 								<div class="left">
@@ -181,7 +193,7 @@
 			</section>
 		</main>
 
-		<?php require_once 'template-parts/admin/cards.php' ?>
+		<?php if( $is_admin ) require_once 'template-parts/admin/cards.php' ?>
 
 		<footer class="footer">
 			<div class="container">

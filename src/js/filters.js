@@ -269,18 +269,13 @@ const generateCards = scrolling => {
 		})
 	}
 
-	if (scrolling) {
-		results.innerHTML += structure
-		showText()
-		showPopup()
-		showCardPopup()
-	}
-	else {
-		results.innerHTML = structure
-		showText()
-		showPopup()
-		showCardPopup()
-	}
+	if( scrolling ) results.innerHTML += structure
+	else results.innerHTML = structure
+
+	showText()
+	showPopup()
+	showCardPopup()
+	declineCard()
 }
 
 /**
@@ -307,6 +302,10 @@ const generateCards = scrolling => {
  * @returns {string}	HTML structure of the card.
  */
 const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+	const
+		isAdmin			= document.body.classList.contains( 'user-admin' ),
+		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : ''
+
 	return `<li class="card" data-id="${ id }">
 		<div class="card-inner">
 			<div class="card-left">
@@ -378,6 +377,7 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						<button class="card-button">
 							Оставить заявку
 						</button>
+						${ deleteButton }
 					</div>
 				</div>
 			</div>
@@ -443,4 +443,43 @@ const showFiltersTips = e => {
 	filtersWrappers.forEach(filter => filter.classList.remove('active'))
 	filterWrapper.classList.add('active')
 	populateTips(e.target.className.replace('search ', ''))
+}
+
+/**
+ * Decline card as Admin.
+ */
+const declineCard = () => {
+	const buttons = document.querySelectorAll( '.admin-delete-card' )
+
+	if( ! buttons.length ) return
+
+	buttons.forEach( button => {
+		button.addEventListener( 'click', e => {
+			e.preventDefault()
+
+			if( ! confirm( 'Действительно удалить?' ) ) return
+
+			const
+				card		= button.closest( '.card' ),
+				cardId		= card.dataset.id || '',
+				request		= new XMLHttpRequest(),
+				formData	= new FormData()
+
+			formData.append( 'func', 'delete-card' )
+			formData.append( 'id', cardId )
+			request.open( 'post', 'send-form.php', true )
+			request.responseType = 'json'
+
+			request.addEventListener( 'load', () => {
+				if( request.status === 200 ){
+					if( request.response.success ) card.remove()
+					else console.error( request.response.message )
+				}	else {
+					console.error( request.response )
+				}
+			} )
+
+			request.send( formData )
+		} )
+	} )
 }
