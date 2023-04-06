@@ -71,8 +71,12 @@
 			</div>
 		</footer>
 	</div><!-- .wrapper -->
+
 	<script src="js/main.min.js"></script>
-	@@include( './popup.html' )
-	@@include( './card-form.html' )
+
+	<?php
+	require_once 'popup.php';
+	require_once 'card-form.php';
+	?>
 </body>
 </html>
