@@ -502,7 +502,7 @@ const showEditCardPopup = () => {
 		formAddress		= form.querySelector( 'input[name="address"]' ),
 		formTech		= form.querySelector( 'input[name="tech"]' ),
 		formDist		= form.querySelector( 'input[name="dist"]' ),
-		formSkill		= form.querySelector( 'input[name="full-name"]' ),
+		formSkill		= form.querySelector( 'input[name="skill"]' ),
 		formExp			= form.querySelector( 'input[name="exp"]' ),
 		formArrive		= form.querySelector( 'input[name="arrive"]' ),
 		formDays		= form.querySelector( 'input[name="days"]' ),

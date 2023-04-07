@@ -49,9 +49,16 @@ if( $admin_value = $_COOKIE['admin'] ?? null ){
 							</span>
 							+7 (999) 999-99-99
 						</a>
-						<button class="popup-button">
-							Добавить анкету
-						</button>
+
+						<?php
+						if( ! $is_admin ){
+							?>
+							<button class="popup-button">
+								Добавить анкету
+							</button>
+							<?php
+						}
+						?>
 					</div>
 				</div>
 			</div>

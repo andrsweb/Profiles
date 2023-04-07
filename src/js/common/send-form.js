@@ -20,10 +20,12 @@ const submitForm = ( selector ) => {
 				request			= new XMLHttpRequest(),
 				formData		= new FormData( form ),
 				formType		= form.dataset.type,
-				isAdmin			= form.dataset.admin || ''
+				isAdmin			= form.dataset.admin || '',
+				cardId			= form.dataset.card || ''
 
 			formData.append( 'func', formType )
 			formData.append( 'admin', isAdmin )
+			formData.append( 'card', cardId )
 			request.open( 'post', 'send-form.php', true )
 			request.responseType = 'json'
 
@@ -44,6 +46,8 @@ const submitForm = ( selector ) => {
 							form.classList.remove( 'error' )
 							form.innerHTML = request.response.message
 						}
+
+						if( cardId ) setTimeout( () => window.location.reload(), 1000 )
 					}	else {
 						formResponse.classList.remove( 'success' )
 						formResponse.classList.add( 'error' )

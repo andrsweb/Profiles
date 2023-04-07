@@ -15,6 +15,22 @@ function as_clean_value( $value )
 	return htmlspecialchars( $value );
 }
 
+/**
+ * Function checks phone symbols.
+ *
+ * @param   string  $phone  Some phone number.
+ * @return  bool            True if OK, false if string has bad symbols.
+ */
+function as_check_phone( string $phone ): bool
+{
+	return preg_match('/^[0-9()+\-\s]+$/iu', $phone );
+}
+
+function as_working_hours( string $hours ): bool
+{
+	return preg_match('/^[0-9.:\-\s]+$/iu', $hours );
+}
+
 if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 	switch( $_POST['func'] ){
 		case 'send-card':
@@ -41,6 +57,7 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 
 function get_data(){
 	$is_admin	= as_clean_value( $_POST['admin'] );
+	$card_id	= as_clean_value( $_POST['card'] );
 	$name		= as_clean_value( $_POST['full-name'] );
 	$town		= as_clean_value( $_POST['town'] );
 	$metro		= as_clean_value( $_POST['metro'] );
@@ -79,13 +96,56 @@ function get_data(){
 	}
 
 	// If form was sent from the Admin page - check more fields.
-	if( $is_admin ){
+	if( $is_admin || $card_id ){
 		if( ! $rate || ! $done ){
 			echo json_encode( [
 				'success'	=> 0,
 				'message'	=> 'Пожалуйста, заполните все необходимые поля.'
 			] );
 			die();
+		}
+	}
+
+	// Phone is not valid.
+	if( ! as_check_phone( $tel ) ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Пожалуйста, введите корректный телефон.'
+		] );
+		die();
+	}
+
+	if( ! as_working_hours( $workTime ) ){
+		echo json_encode( [
+			'success'	=> 0,
+			'message'	=> 'Пожалуйста, введите корректный график работы.'
+		] );
+		die();
+	}
+
+	// Check rating value.
+	if( $rate ){
+		if( ! is_numeric( $rate ) || $rate < 0 || $rate > 5 ){
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Пожалуйста, введите корректный рейтинг (0-5, можно дробный).'
+			] );
+			die();
+		}	else {
+			$rate = number_format( $rate, 1 );
+		}
+	}
+
+	// Check done value.
+	if( $done ){
+		if( ! is_numeric( $done ) || $done < 0 ){
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Пожалуйста, введите корректное количество работ.'
+			] );
+			die();
+		}	else {
+			$done = ( int ) $done;
 		}
 	}
 
@@ -148,12 +208,48 @@ function get_data(){
 		'approved'	=> ( $is_admin && is_admin() ) ? '1' : '0'
 	];
 
-	if( file_exists( $file_name ) ){
+	// If this is card editing.
+	if( $card_id ){
+		if( ! is_admin() ){
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Ошибка - попытка редактирования от имени Администратора.'
+			] );
+			die();
+		}
+
+		if( ! file_exists( $file_name ) ){
+			echo json_encode( [
+				'success'	=> 0,
+				'message'	=> 'Ошибка - данные отсутствуют.'
+			] );
+			die();
+		}
+
 		$current_data	= file_get_contents( $file_name );
 		$array_data		= json_decode( $current_data, true );
-		$array_data[]	= $new_card;
-	}	else {
-		$array_data = [ $new_card ];
+		$updated_data	= [];
+
+		foreach( $array_data as $item ){
+			// Card found.
+			if( $item['id'] === $card_id ){
+				$new_card['src']		= $image_path ?? $item['src'];
+				$new_card['approved']	= $item['approved'];
+				$updated_data[]			= $new_card;
+			}	else {
+				$updated_data[] = $item;
+			}
+		}
+
+		$array_data = $updated_data;
+	}	else{
+		if( file_exists( $file_name ) ){
+			$current_data	= file_get_contents( $file_name );
+			$array_data		= json_decode( $current_data, true );
+			$array_data[]	= $new_card;
+		}	else{
+			$array_data = [ $new_card ];
+		}
 	}
 
 	if( file_put_contents( $file_name, json_encode( $array_data, JSON_UNESCAPED_UNICODE ) ) )
@@ -359,6 +455,12 @@ function as_send_email( string $subject, string $message ){
 		] );	// Failed.
 }
 
+/**
+ * Shows formatted structure of any values for testing.
+ *
+ * @param $smth
+ * @return void
+ */
 function print_smth( $smth ){
 	echo '<pre>' . print_r( $smth, 1 ) . '</pre>';
 }
