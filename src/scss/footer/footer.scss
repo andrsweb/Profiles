@@ -24,6 +24,21 @@
 			text-align: left;
 		}
 	}
+
+	&-links {
+		margin-top: 20px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+
+		a {
+			margin-right: 10px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
 }
 
 .row {
@@ -106,9 +121,25 @@
 	}
 }
 
-.up {
-	transition: scale ease $tr;
+.scroll-img {
+	opacity: 0;
+	visibility: hidden;
+	position: fixed;
+	bottom: 10%;
+	right: 20px;
+	padding: 5px;
 	border-radius: 50%;
-	margin-right: 10px;
+	cursor: pointer;
+	transition: opacity ease 0.35s;
+	z-index: 100;
+
+	&.scrolled {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	&:hover {
+		opacity: 0.75;
+	}
 }
 

@@ -193,15 +193,23 @@ label {
 	display: inline-block;
 	min-width: 125px;
 	font-size: 18px;
-	width: 160px;
+	width: 175px;
 }
 
 .left {
-	width: 50%;
+	width: 90%;
+
+	@media all and (min-width: $md) {
+		width: 50%;
+	}
 }
 
 .right {
-	width: 50%;
+	width: 90%;
+
+	@media all and (min-width: $md) {
+		width: 50%;
+	}
 }
 
 .admin-page {

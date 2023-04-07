@@ -1,7 +1,7 @@
 import { showPopup } from './popup'
 import { showCardPopup } from './card-popup'
 
-const STEP = 1
+const STEP = 5
 let data = [],
 	filteredData = [],
 	filterTown = '',

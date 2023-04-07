@@ -1,23 +1,34 @@
 import smoothscroll from 'smoothscroll-polyfill';
 
 document.addEventListener( 'DOMContentLoaded', () => {
-	'use strict'
+'use strict'
 
-	smoothscroll.polyfill()
-	scrollToTop()
+smoothscroll.polyfill()
+scrollToTop()
 } )
 
 const scrollToTop = () => {
 
-	const scrollArrow = document.querySelector( '.col-img' )
+const scrollArrow = document.querySelector( '.scroll-img' )
 
+window.addEventListener( 'scroll', () => {
 	if( ! scrollArrow ) return
 
-	scrollArrow.addEventListener( 'click', () => {
+	let scrollTop = window.scrollY
 
-		window.scrollTo( {
-			top: 0,
-			behavior: 'smooth'
-		} )
+	if ( scrollTop > 400 ) {
+		scrollArrow.classList.add( 'scrolled' )
+	} else {
+		if ( scrollTop < 400 ) {
+			scrollArrow.classList.remove( 'scrolled' )
+		}
+	}
+})
+
+scrollArrow.addEventListener( 'click', () => {
+	window.scrollTo( {
+		top: 0,
+		behavior: 'smooth'
 	} )
+} )
 }

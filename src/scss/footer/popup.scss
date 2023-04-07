@@ -33,6 +33,10 @@
 		@media all and (min-width: $lg) {
 			padding: 20px;
 		}
+
+		@media all and (min-width: $xl) {
+			max-width: 600px;
+		}
 	}
 
 	.popup {
@@ -45,6 +49,12 @@
 
 		&-left, &-right {
 			width: 50%;
+
+			@media all and (min-width: $xl) {
+				input {
+					width: 80%;
+				}
+			}
 		}
 		
 	}
@@ -117,6 +127,7 @@
 
 		&::placeholder {
 			font-size: 12px;
+			color: $white;
 		}
 	}
 }

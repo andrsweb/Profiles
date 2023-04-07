@@ -2,7 +2,7 @@
 	<div class="popup">
 		<form class="form" data-type="send-card">
 			<legend>
-				Добавить анкету
+				Добавить свою анкету
 			</legend>
 			<fieldset>
 				<div class="popup-left">

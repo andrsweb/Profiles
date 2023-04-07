@@ -23,7 +23,8 @@
 						</div>
 						<div class="hero-input">
 							<label for="district">
-								Район
+								Район <br>
+								(населенный пункт)
 							</label>
 							<input id="district" name="dist" type="text">
 						</div>
