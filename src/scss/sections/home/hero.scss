@@ -262,3 +262,42 @@ label {
 		background-color: transparent;
 	}
 }
+
+.admin-page {
+	.enter-form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		input {
+			&:last-child {
+				margin-right: 0;
+			}
+	
+			@media all and (min-width: $xl) {
+				margin-right: 20px;
+			}
+		}
+	
+		fieldset {
+			display: flex;
+			max-width: 500px;
+		}
+	
+		button {
+			display: block;
+			background-color: $accent;
+			padding: 10px 20px;
+			border-radius: 5px;
+			color: $white;
+			font-size: 15px;
+			border-style: none;
+			transition: opacity ease 0.35s;
+			cursor: pointer;
+	
+			&:hover {
+				opacity: 0.75;
+			}
+		}
+	}
+}

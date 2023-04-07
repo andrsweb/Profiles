@@ -123,7 +123,17 @@
 			</form>
 			<?php
 		}	else {
-			echo "Доступ запрещен";
+			?>
+				<form class="enter-form" method="GET">
+					<fieldset>
+						<input name="user" type="text" placeholder="Логин">
+						<input name="pass" type="text" placeholder="Пароль">
+					</fieldset>
+					<button>
+						Войти
+					</button>
+				</form>
+			<?
 		}
 		?>
 	</div>
