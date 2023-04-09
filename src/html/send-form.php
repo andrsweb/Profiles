@@ -432,10 +432,10 @@ function as_send_card_form(){
 
 	// Prepare message for mail.
 	$message = "Привет!\n" .
-		"Заявка:\n\n" .
+		"Отзыв о мастере:\n\n" .
 		"ФИО - $name\n" .
-		"Почта - $email\n" .
-		"Телефон - $tel\n\n\n";
+		"ФИО мастера - $email\n" .
+		"Отзыв - $tel\n\n\n";
 
 	as_send_email( 'Заявка', $message );
 }

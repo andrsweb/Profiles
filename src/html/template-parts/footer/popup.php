@@ -13,7 +13,6 @@
 					<input class="form-input" name="tech" type="text" placeholder="Услуги">
 					<input class="form-input" name="dist" type="text" placeholder="Район">
 					<input class="form-input" name="skill" type="text" placeholder="Умею делать">
-					<input class="form-input" name="email" type="text" placeholder="Почта">
 				</div>
 				<div class="popup-right">
 					<input class="form-input" name="exp" type="text" placeholder="Опыт">
@@ -22,8 +21,9 @@
 					<input class="form-input" name="gar" type="text" placeholder="Гарантия">
 					<input class="form-input" name="workTime" type="text" placeholder="Рабочее время">
 					<input class="form-input" name="tel" type="tel" placeholder="Телефон">
-					<input class="form-input" name="about" type="text" placeholder="Кратко о себе">
+					<input class="form-input" name="email" type="text" placeholder="Почта">
 				</div>
+				<textarea class="popup-textarea" name="about" type="text" placeholder="Кратко о себе"></textarea>
 				<div class="popup-wide">
 					<label for="src">
 						Изображение (макс. 1Мб)

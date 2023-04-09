@@ -134,13 +134,8 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="card-about"><span class="first">Обо мне:</span><span
-								class="second on">Показать</span>
-							<div class="card-info">
-								<div class="card-info-inner">
-									${about}
-								</div>
-							</div>
+						<div class="card-about"><span class="first">Обо мне:</span>${about}<span
+								class="second on"></span>
 						</div>
 					</div>
 					<div class="card-col">

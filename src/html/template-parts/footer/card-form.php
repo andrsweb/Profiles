@@ -5,9 +5,9 @@
 				<legend>
 					Оставить заявку
 				</legend>
-				<input class="form-input" name="name" type="text" placeholder="ФИО">
-				<input class="form-input" name="tel" type="tel" placeholder="Телефон">
-				<input class="form-input" name="email" type="email" placeholder="Почта">
+				<input class="form-input" name="name" type="text" placeholder="Ваше имя">
+				<input class="form-input" name="tel" type="text" placeholder="ФИО мастера">
+				<textarea class="form-textarea" name="email" type="text" placeholder="Отзыв"></textarea>
 			</fieldset>
 			<div class="popup-btn-wrapper">
 				<button class="form-button" type="submit">

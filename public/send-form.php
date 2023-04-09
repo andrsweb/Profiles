@@ -73,7 +73,6 @@ function get_data(){
 	$arr	    = as_clean_value( $_POST['arrive'] );
 	$days	    = as_clean_value( $_POST['days'] );
 	$gar	    = as_clean_value( $_POST['gar'] );
-	$email	    = as_clean_value( $_POST['email'] );
 	$workTime	= as_clean_value( $_POST['workTime'] );
 	$file_name	= 'data/data.json';
 
@@ -193,7 +192,6 @@ function get_data(){
 		'town'		=> $town,
 		'metro'		=> $metro,
 		'tech'		=> $tech,
-		'email'		=> $email,
 		'dist'		=> $dist,
 		'src'		=> $image_path ?? '',
 		'address'	=> $address,
@@ -434,10 +432,10 @@ function as_send_card_form(){
 
 	// Prepare message for mail.
 	$message = "Привет!\n" .
-		"Заявка:\n\n" .
+		"Отзыв о мастере:\n\n" .
 		"ФИО - $name\n" .
-		"Почта - $email\n" .
-		"Телефон - $tel\n\n\n";
+		"ФИО мастера - $email\n" .
+		"Отзыв - $tel\n\n\n";
 
 	as_send_email( 'Заявка', $message );
 }

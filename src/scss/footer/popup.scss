@@ -187,9 +187,28 @@
 	label {
 		width: auto;
 		color: $white;
+		font-size: 12px;
 	}
 
 	#src {
 		background-color: transparent;
+	}
+}
+
+.popup-textarea, .form-textarea {
+	margin-top: 20px;
+	resize: none;
+	border: 0;
+	border-style: none;
+	border-radius: 5px;
+	width: 90%;
+	min-height: 100px;
+
+	&::placeholder {
+		font-family: $ff;
+		color: $black;
+		opacity: 1;
+		padding-left: 5px;
+		padding-top: 5px;
 	}
 }
