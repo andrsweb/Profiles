@@ -112,7 +112,7 @@
 							<label for="tel">
 								Телефон
 							</label>
-							<input id="tel" name="tel" type="text" placeholder="+7(***)***-**-**">
+							<input id="tel" class="input-tel" name="tel" type="text" placeholder="Телефон">
 						</div>
 					</div>
 				</fieldset>

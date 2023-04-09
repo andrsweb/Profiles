@@ -71,9 +71,12 @@
 	.form-input {
 		margin-bottom: 10px;
 		margin-right: 0;
+		color: darkslategray;
+		background-color: rgb(231, 230, 230);
 
 		&::placeholder {
 			opacity: 1;
+			color: darkslategrey;
 		}
 
 		&:last-child {
@@ -252,7 +255,7 @@
 	width: 100%;
 }
 
-.popup-textarea {
+.popup-textarea, .form-textarea {
 	color: darkslategray;
 	background-color: rgb(231, 230, 230);
 	
