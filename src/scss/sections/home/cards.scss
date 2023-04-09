@@ -159,13 +159,13 @@
 
 .card-email {
 	font-size: 15px;
-	width: 100%;
+	width: auto;
 	text-align: center;
 	color: $black;
 	background-color: $white;
 	border: 1px solid rgb(172, 47, 47);
 	margin: 0;
-	padding: 5px 10px;
+	padding: 3px 10px;
 	border-radius: 5px;
 	max-width: 180px;
 	transition: background-color ease 0.35s, color ease 0.35s;
@@ -174,5 +174,9 @@
 	&:hover {
 		background-color: $accent;
 		color: $white;
+	}
+
+	@media all and (min-width: $lg) {
+		width: 100%;
 	}
 }
