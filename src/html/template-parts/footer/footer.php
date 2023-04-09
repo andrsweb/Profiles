@@ -94,6 +94,7 @@
 	<?php
 		require_once 'popup.php';
 		require_once 'card-form.php';
+		require_once 'master-popup.php';
 	?>
 
 	<script src="js/main.min.js"></script>

@@ -1,5 +1,5 @@
 .popup-wrapper,
-.card-popup-wrapper {
+.card-popup-wrapper, .master-popup-wrapper {
 	position:fixed;
 	display:none;
 	align-items:center;
@@ -17,7 +17,7 @@
 	}
 
 	.popup,
-	.card-popup {
+	.card-popup, .master-popup {
 		position: relative;
 		width: 100%;
 		display: flex;
@@ -178,6 +178,36 @@
 		100% {
 			scale: 1;
 			transform: rotate( 0 );
+		}
+	}
+}
+
+.master-popup {
+	animation: scale4 1s ease forwards;
+
+	@keyframes scale4 {
+		0% {
+			scale: 0;
+			transform: rotate( 180deg );
+		}
+
+		100% {
+			scale: 1;
+			transform: rotate( 0 );
+		}
+	}
+}
+
+.master-popup-wrapper {
+	animation: anim3 1s ease forwards;
+
+	@keyframes anim3 {
+		0% {
+			background-color: none;
+		}
+
+		100% {
+			background-color: rgba(17, 17, 17, 0.932);
 		}
 	}
 }

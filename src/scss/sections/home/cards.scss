@@ -170,6 +170,7 @@
 	max-width: 180px;
 	transition: background-color ease 0.35s, color ease 0.35s;
 	margin-bottom: 5px;
+	cursor: pointer;
 
 	&:hover {
 		background-color: $accent;

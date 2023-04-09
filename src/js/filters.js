@@ -1,5 +1,6 @@
 import { showPopup } from './popup'
 import { showCardPopup } from './card-popup'
+import { showMasterPopup  } from './master-popup'
 
 const STEP = 5
 let data = [],
@@ -275,6 +276,7 @@ const generateCards = scrolling => {
 	showText()
 	showPopup()
 	showCardPopup()
+	showMasterPopup()
 	declineCard()
 	showEditCardPopup()
 }
@@ -305,7 +307,7 @@ const generateCards = scrolling => {
 const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days, email } ) => {
 	const
 		isAdmin			= document.body.classList.contains( 'user-admin' ),
-		contactButton	= isAdmin ? '' : `<a href="mailto: ${email}" class="card-email">Оставить заявку</a>`,
+		contactButton	= isAdmin ? '' : `<div class="card-email">Оставить заявку</div>`,
 		feedbackButton	= isAdmin ? '' : `<button class="card-button">Оставить отзыв</button>`,
 		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : '',
 		editButton		= isAdmin ? '<button class="button admin-edit-card popup-button">Редактировать</button>' : ''
