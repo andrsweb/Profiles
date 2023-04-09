@@ -73,6 +73,7 @@ function get_data(){
 	$arr	    = as_clean_value( $_POST['arrive'] );
 	$days	    = as_clean_value( $_POST['days'] );
 	$gar	    = as_clean_value( $_POST['gar'] );
+	$email	    = as_clean_value( $_POST['email'] );
 	$workTime	= as_clean_value( $_POST['workTime'] );
 	$file_name	= 'data/data.json';
 
@@ -192,6 +193,7 @@ function get_data(){
 		'town'		=> $town,
 		'metro'		=> $metro,
 		'tech'		=> $tech,
+		'email'		=> $email,
 		'dist'		=> $dist,
 		'src'		=> $image_path ?? '',
 		'address'	=> $address,

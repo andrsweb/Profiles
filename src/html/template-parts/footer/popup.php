@@ -13,6 +13,7 @@
 					<input class="form-input" name="tech" type="text" placeholder="Услуги">
 					<input class="form-input" name="dist" type="text" placeholder="Район">
 					<input class="form-input" name="skill" type="text" placeholder="Умею делать">
+					<input class="form-input" name="email" type="text" placeholder="Почта">
 				</div>
 				<div class="popup-right">
 					<input class="form-input" name="exp" type="text" placeholder="Опыт">

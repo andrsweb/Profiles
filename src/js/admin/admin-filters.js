@@ -67,7 +67,7 @@ const generateCards = () => {
  * @param days
  * @returns {string}	HTML structure of the card.
  */
-const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days, email } ) => {
 	return `<li class="card" data-id="${ id }">
 		<div class="card-inner">
 			<div class="card-left">
@@ -120,6 +120,20 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 				</div>
 				<div class="card-row">
 					<div class="card-col">
+						<span class="first">Почта:</span><span class="second">${email}</span>
+					</div>
+					<div class="card-col">
+						<a href="tel:${tel}" class="card-tel master-tel">
+							<span class="first">Телефон:</span><span class="second">${tel}</span>
+						</a>
+					</div>
+					<div class="card-col">
+						<button class="button admin-approve-card">Одобрить</button>
+						<button class="button admin-delete-card">Удалить</button>
+					</div>
+				</div>
+				<div class="card-row">
+					<div class="card-col">
 						<div class="card-about"><span class="first">Обо мне:</span><span
 								class="second on">Показать</span>
 							<div class="card-info">
@@ -130,13 +144,8 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						</div>
 					</div>
 					<div class="card-col">
-						<a href="tel:${tel}" class="card-tel master-tel">
-							<span class="first">Телефон:</span><span class="second">${tel}</span>
-						</a>
 					</div>
 					<div class="card-col">
-						<button class="button admin-approve-card">Одобрить</button>
-						<button class="button admin-delete-card">Удалить</button>
 					</div>
 				</div>
 			</div>

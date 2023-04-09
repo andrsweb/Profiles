@@ -26,10 +26,14 @@
 	}
 
 	&-links {
-		margin-top: 20px;
+		margin-top: 10px;
 		width: 100%;
 		display: flex;
 		justify-content: center;
+
+		@media all and (min-width: $md) {
+			justify-content: flex-start;
+		}
 
 		a {
 			margin-right: 10px;
@@ -122,6 +126,9 @@
 }
 
 .scroll-img {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	opacity: 0;
 	visibility: hidden;
 	position: fixed;

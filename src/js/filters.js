@@ -302,10 +302,11 @@ const generateCards = scrolling => {
  * @param days
  * @returns {string}	HTML structure of the card.
  */
-const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days, email } ) => {
 	const
 		isAdmin			= document.body.classList.contains( 'user-admin' ),
-		contactButton	= isAdmin ? '' : '<button class="card-button">Оставить заявку</button>',
+		contactButton	= isAdmin ? '' : `<a href="mailto: ${email}" class="card-email">Оставить заявку</a>`,
+		feedbackButton	= isAdmin ? '' : `<button class="card-button">Оставить отзыв</button>`,
 		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : '',
 		editButton		= isAdmin ? '<button class="button admin-edit-card popup-button">Редактировать</button>' : ''
 
@@ -318,42 +319,7 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						</div>
 					</div>
 					<div class="card-col">
-						<div class="card-town"><span class="first">Город:</span><span class="second">${town}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-dist"><span class="first">Район:</span><span class="second">${dist}</span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-metro"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span>
-						</div>
-					</div>
-					<div class="card-col">
-						<div class="card-address"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-skill"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-exp"><span class="first">Опыт:</span><span class="second">${exp}
-							</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-gar"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-arrive"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-worktime"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
+						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span></div>
 					</div>
 					<div class="card-col">
 						<div class="card-days"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
@@ -361,24 +327,68 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 				</div>
 				<div class="card-row">
 					<div class="card-col">
-						<div class="card-about"><span class="first">Обо мне:</span><span
-								class="second on">Показать</span>
-							<div class="card-info">
-								<div class="card-info-inner">
-									${about}
-								</div>
-							</div>
-						</div>
+						<div class="card-town"><span class="first">Город:</span><span class="second">${town}</span></div>
+					</div>
+					<div class="card-col">
+						<div class="card-exp"><span class="first">Опыт:</span><span class="second">${exp}</span></div>
+					</div>
+					<div class="card-col">
+						<div class="card-worktime"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
+					</div>
+				</div>
+				<div class="card-row">
+					<div class="card-col">
+						<div class="card-dist"><span class="first">Район:</span><span class="second">${dist}</span></div>
+					</div>
+					<div class="card-col">
+						<div class="card-skill"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
+					</div>
+					<div class="card-col">
+
+					</div>
+				</div>
+				<div class="card-row">
+					<div class="card-col">
+						<div class="card-metro"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
+					</div>
+					<div class="card-col">
+						<div class="card-arrive"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
 					</div>
 					<div class="card-col">
 						<a href="tel:${tel}" class="master-tel card-tel">
 							<span class="first">Телефон:</span><span class="second">${tel}</span>
 						</a>
 					</div>
+				</div>
+				<div class="card-row">
+					<div class="card-col">
+						<div class="card-address"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
+					</div>
+					<div class="card-col">
+						<div class="card-gar"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
+					</div>
 					<div class="card-col">
 						${ contactButton }
+						${ feedbackButton }
 						${ editButton }
 						${ deleteButton }
+					</div>
+				</div>
+				<div class="card-row">
+					<div class="card-col">
+						<div class="card-about"><span class="first">Обо мне:</span><span class="second on">Показать</span>
+								<div class="card-info">
+									<div class="card-info-inner">
+										${about}
+									</div>
+								</div>
+						</div>
+					</div>
+					<div class="card-col">
+					
+					</div>
+					<div class="card-col">
+						
 					</div>
 				</div>
 			</div>
