@@ -20,13 +20,13 @@
 					<input class="form-input" name="days" type="text" placeholder="Дни работы">
 					<input class="form-input" name="gar" type="text" placeholder="Гарантия">
 					<input class="form-input" name="workTime" type="text" placeholder="Рабочее время">
-					<input class="form-input" name="tel" type="tel" placeholder="Телефон">
+					<input class="form-input input-tel" name="tel" type="tel" placeholder="Телефон">
 					<input class="form-input" name="email" type="text" placeholder="Почта">
 				</div>
 				<textarea class="popup-textarea" name="about" type="text" placeholder="Кратко о себе"></textarea>
 				<div class="popup-wide">
 					<label for="src">
-						Изображение (макс. 1Мб)
+						Ваша фотография (макс. 1Мб)
 					</label>
 					<input id="src" name="src" type="file" />
 				</div>

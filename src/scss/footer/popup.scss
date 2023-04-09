@@ -45,10 +45,14 @@
 			flex-direction: row;
 			flex-wrap: wrap;
 			align-items: flex-start;
+			justify-content: center;
 		}
 
 		&-left, &-right {
 			width: 50%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
 			@media all and (min-width: $xl) {
 				input {
@@ -183,6 +187,7 @@
 	display: flex;
 	align-items: center;
 	font-size: 12px;
+	padding-left: 27px;
 
 	label {
 		width: auto;
@@ -203,12 +208,25 @@
 	border-radius: 5px;
 	width: 90%;
 	min-height: 100px;
+	padding-left: 5px;
+	padding-top: 5px;
 
 	&::placeholder {
 		font-family: $ff;
 		color: $black;
 		opacity: 1;
-		padding-left: 5px;
-		padding-top: 5px;
+	}
+}
+
+.form-textarea {
+	width: 100%;
+}
+
+.popup-textarea {
+	color: darkslategray;
+	background-color: rgb(231, 230, 230);
+	
+	&::placeholder {
+		color: darkslategray;
 	}
 }

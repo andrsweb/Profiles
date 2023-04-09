@@ -91,12 +91,11 @@
 			</div>
 		</footer>
 	</div><!-- .wrapper -->
+	<?php
+		require_once 'popup.php';
+		require_once 'card-form.php';
+	?>
 
 	<script src="js/main.min.js"></script>
-
-	<?php
-	require_once 'popup.php';
-	require_once 'card-form.php';
-	?>
 </body>
 </html>

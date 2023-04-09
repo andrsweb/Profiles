@@ -306,3 +306,24 @@ label {
 	font-size: 18px;
 	text-align: center;
 }
+
+.popup input {
+	background-color: rgb(231, 230, 230);
+	color: darkslategray;
+	
+	&::placeholder {
+		color: darkslategray;
+	}
+}
+
+.form-input {
+	max-width: 140px;
+
+	@media all and (min-width: $sm) {
+		max-width: 210px;
+	}
+
+	@media all and (min-width: $xl) {
+		max-width: 100%;
+	}
+}

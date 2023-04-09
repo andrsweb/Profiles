@@ -45,5 +45,5 @@
 	<label for="tel">
 		Телефон
 	</label>
-	<input id="tel" name="tel" type="text" placeholder="+7(***)***-**-**">
+	<input class="input-tel" id="tel" name="tel" type="text" placeholder="Телефон">
 </div>
