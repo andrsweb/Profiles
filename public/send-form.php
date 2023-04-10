@@ -442,7 +442,7 @@ function as_send_card_form(){
 	as_send_email(  $email, 'Заявка', $message );
 }
 
-function as_send_email( string $mail = 'golden-web@mail.ru', string $subject, string $message,  ){
+function as_send_email( string $subject, string $message, string $mail = 'golden-web@mail.ru'  ){
 	$result = mail( $mail, $subject, $message );
 
 	if( $result )

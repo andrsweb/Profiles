@@ -17,11 +17,8 @@ export const appendEmailData = () => {
 		button.addEventListener( 'click', () => {
 
 			form.setAttribute( 'data-master', button.dataset.mail )
-			console.log( form.dataset.master )
 		} )
 	} )
-
-	
 }
 
 const submitForm = ( selector ) => {
