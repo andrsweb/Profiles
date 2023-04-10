@@ -439,7 +439,7 @@ function as_send_card_form(){
 		"Телефон - $tel\n" .
 		"Проблема - $text\n\n\n";
 
-	as_send_email(  $email, 'Заявка', $message );
+	as_send_email(  'Заявка', $message, $email );
 }
 
 function as_send_email( string $subject, string $message, string $mail = 'golden-web@mail.ru'  ){
