@@ -420,7 +420,7 @@ function as_send_header_form(){
 	// Prepare message for mail.
 	$message = "Отзыв\n" .
 		"Имя - $name\n" .
-		"ФИО мастера - $age\n" .
+		"ФИО мастера - $master\n" .
 		"Отзыв - $text\n\n\n";
 
 	as_send_email( 'Анкета', $message );
@@ -439,11 +439,11 @@ function as_send_card_form(){
 		"Телефон - $tel\n" .
 		"Проблема - $text\n\n\n";
 
-	as_send_email( 'Заявка', $message, $email );
+	as_send_email(  $email, 'Заявка', $message );
 }
 
-function as_send_email( string $subject, string $message, string $mail = 'golden-web@mail.ru' ){
-	$result = mail( $subject, $message, $mail );
+function as_send_email( string $mail = 'golden-web@mail.ru', string $subject, string $message,  ){
+	$result = mail( $mail, $subject, $message );
 
 	if( $result )
 		echo json_encode( [
