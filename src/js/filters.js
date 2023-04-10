@@ -1,6 +1,7 @@
 import { showPopup } from './popup'
 import { showCardPopup } from './card-popup'
 import { showMasterPopup  } from './master-popup'
+import { appendEmailData } from './common/send-form'
 
 const STEP = 5
 let data = [],
@@ -279,6 +280,7 @@ const generateCards = scrolling => {
 	showMasterPopup()
 	declineCard()
 	showEditCardPopup()
+	appendEmailData()
 }
 
 /**
@@ -307,7 +309,7 @@ const generateCards = scrolling => {
 const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days, email } ) => {
 	const
 		isAdmin			= document.body.classList.contains( 'user-admin' ),
-		contactButton	= isAdmin ? '' : `<div class="card-email">Оставить заявку</div>`,
+		contactButton	= isAdmin ? '' : `<button class="card-email" data-mail="${ email }">Оставить заявку</button>`,
 		feedbackButton	= isAdmin ? '' : `<button class="card-button">Оставить отзыв</button>`,
 		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : '',
 		editButton		= isAdmin ? '<button class="button admin-edit-card popup-button">Редактировать</button>' : ''
@@ -387,7 +389,6 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						</div>
 					</div>
 					<div class="card-col">
-					
 					</div>
 					<div class="card-col">
 						

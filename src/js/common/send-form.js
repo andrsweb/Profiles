@@ -4,7 +4,25 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	submitForm( '.form' )
 	submitForm( '.card-form' )
 	submitForm( '.cards-form' )
+	submitForm( '.feedback-form' )
 } )
+
+export const appendEmailData = () => {
+	const popupBtn = document.querySelectorAll( '.card-email' )
+	const form = document.querySelector( '.card-form' )
+
+	if( ! popupBtn.length ) return
+	
+	popupBtn.forEach( button => {
+		button.addEventListener( 'click', () => {
+
+			form.setAttribute( 'data-master', button.dataset.mail )
+			console.log( form.dataset.master )
+		} )
+	} )
+
+	
+}
 
 const submitForm = ( selector ) => {
 	const forms	= document.querySelectorAll( selector )
@@ -21,11 +39,13 @@ const submitForm = ( selector ) => {
 				formData		= new FormData( form ),
 				formType		= form.dataset.type,
 				isAdmin			= form.dataset.admin || '',
-				cardId			= form.dataset.card || ''
+				cardId			= form.dataset.card || '',
+				mail            = form.dataset.master || ''
 
 			formData.append( 'func', formType )
 			formData.append( 'admin', isAdmin )
 			formData.append( 'card', cardId )
+			formData.append( 'master', mail )
 			request.open( 'post', 'send-form.php', true )
 			request.responseType = 'json'
 

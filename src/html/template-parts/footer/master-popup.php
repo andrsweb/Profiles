@@ -1,6 +1,6 @@
 <section class="master-popup-wrapper" id="master-body-lock">
 	<div class="master-popup">
-		<form class="card-form" data-type="master-form">
+		<form class="card-form" data-type="master-form" data-master="">
 			<fieldset>
 				<legend>
 					Оставить заявку

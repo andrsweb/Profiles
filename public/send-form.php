@@ -38,8 +38,12 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 			get_data();
 			break;
 
-		case 'card-form':
+		case 'master-form':
 			as_send_card_form();
+			break;
+
+		case 'card-form':
+			as_send_header_form();
 			break;
 
 		case 'approve-card':
@@ -70,6 +74,7 @@ function get_data(){
 	$done	    = as_clean_value( $_POST['done'] );
 	$tel	    = as_clean_value( $_POST['tel'] );
 	$exp	    = as_clean_value( $_POST['exp'] );
+	$email	    = as_clean_value( $_POST['email'] );
 	$arr	    = as_clean_value( $_POST['arrive'] );
 	$days	    = as_clean_value( $_POST['days'] );
 	$gar	    = as_clean_value( $_POST['gar'] );
@@ -202,6 +207,7 @@ function get_data(){
 		'tel'		=> $tel,
 		'exp'		=> $exp,
 		'arrive'	=> $arr,
+		'email'		=> $email,
 		'days'		=> $days,
 		'gar'		=> $gar,
 		'workTime'	=> $workTime,
@@ -408,34 +414,29 @@ function is_admin(): bool
 
 function as_send_header_form(){
 	$name		 = isset( $_POST['name'] ) ? as_clean_value( $_POST['name'] ) : null;
-	$age		 = isset( $_POST['age'] ) ? as_clean_value( $_POST['age'] ) : null;
-	$email		 = isset( $_POST['email'] ) ? as_clean_value( $_POST['email'] ) : null;
-	$tel		 = isset( $_POST['tel'] ) ? as_clean_value( $_POST['tel'] ) : null;
+	$master		 = isset( $_POST['masterName'] ) ? as_clean_value( $_POST['masterName'] ) : null;
 	$text		 = isset( $_POST['text'] ) ? as_clean_value( $_POST['text'] ) : null;
 
 	// Prepare message for mail.
-	$message = "Заявка\n" .
-		"Анкета:\n\n" .
-		"ФИО - $name\n" .
-		"Возраст - $age\n" .
-		"Почта - $email\n" .
-		"Телефон - $tel\n" .
-		"О себе - $text\n\n\n";
+	$message = "Отзыв\n" .
+		"Имя - $name\n" .
+		"ФИО мастера - $age\n" .
+		"Отзыв - $text\n\n\n";
 
 	as_send_email( 'Анкета', $message );
 }
 
 function as_send_card_form(){
 	$name	= isset( $_POST['name'] ) ? as_clean_value( $_POST['name'] ) : null;
-	$email	= isset( $_POST['email'] ) ? as_clean_value( $_POST['email'] ) : null;
 	$tel	= isset( $_POST['tel'] ) ? as_clean_value( $_POST['tel'] ) : null;
+	$text	= isset( $_POST['text'] ) ? as_clean_value( $_POST['text'] ) : null;
 
 	// Prepare message for mail.
 	$message = "Привет!\n" .
-		"Отзыв о мастере:\n\n" .
-		"ФИО - $name\n" .
-		"ФИО мастера - $email\n" .
-		"Отзыв - $tel\n\n\n";
+		"Заявка:\n\n" .
+		"Имя - $name\n" .
+		"Телефон - $tel\n" .
+		"Проблема - $text\n\n\n";
 
 	as_send_email( 'Заявка', $message );
 }

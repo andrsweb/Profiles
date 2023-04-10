@@ -21,7 +21,7 @@
 					<input class="form-input" name="gar" type="text" placeholder="Гарантия">
 					<input class="form-input" name="workTime" type="text" placeholder="Рабочее время">
 					<input class="form-input input-tel" name="tel" type="tel" placeholder="Телефон">
-					<input class="form-input" name="email" type="text" placeholder="Почта">
+					<input class="form-input" name="email" type="email" placeholder="Почта">
 				</div>
 				<textarea class="popup-textarea" name="about" type="text" placeholder="Кратко о себе"></textarea>
 				<div class="popup-wide">
