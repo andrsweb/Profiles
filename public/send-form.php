@@ -430,6 +430,7 @@ function as_send_card_form(){
 	$name	= isset( $_POST['name'] ) ? as_clean_value( $_POST['name'] ) : null;
 	$tel	= isset( $_POST['tel'] ) ? as_clean_value( $_POST['tel'] ) : null;
 	$text	= isset( $_POST['text'] ) ? as_clean_value( $_POST['text'] ) : null;
+	$email	= isset( $_POST['master'] ) ? as_clean_value( $_POST['master'] ) : null;
 
 	// Prepare message for mail.
 	$message = "Привет!\n" .
@@ -438,11 +439,11 @@ function as_send_card_form(){
 		"Телефон - $tel\n" .
 		"Проблема - $text\n\n\n";
 
-	as_send_email( 'Заявка', $message );
+	as_send_email( 'Заявка', $message, $email );
 }
 
-function as_send_email( string $subject, string $message ){
-	$result = mail('golden-web@mail.ru', $subject, $message );
+function as_send_email( string $subject, string $message, string $mail = 'golden-web@mail.ru' ){
+	$result = mail( $subject, $message, $mail );
 
 	if( $result )
 		echo json_encode( [
