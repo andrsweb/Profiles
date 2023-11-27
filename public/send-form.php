@@ -74,6 +74,8 @@ function get_data(){
 	$days	    = as_clean_value( $_POST['days'] );
 	$gar	    = as_clean_value( $_POST['gar'] );
 	$workTime	= as_clean_value( $_POST['workTime'] );
+	$online		= as_clean_value( $_POST['online'] );
+	$map		= as_clean_value( $_POST['map'] );
 	$file_name	= 'data/data.json';
 
 	if( $is_admin && ! is_admin() ){
@@ -86,7 +88,7 @@ function get_data(){
 
 	if(
 		! $name || ! $town || ! $metro || ! $tech || ! $dist || ! $address || ! $skill
-		|| ! $about || ! $tel || ! $exp || ! $arr || ! $days || ! $gar || ! $workTime
+		|| ! $about || ! $tel || ! $exp || ! $arr || ! $days || ! $gar
 	){
 		echo json_encode( [
 			'success'	=> 0,
@@ -205,6 +207,8 @@ function get_data(){
 		'days'		=> $days,
 		'gar'		=> $gar,
 		'workTime'	=> $workTime,
+		'online'	=> $online,
+		'map'		=> $map,
 		'approved'	=> ( $is_admin && is_admin() ) ? '1' : '0'
 	];
 

@@ -63,6 +63,12 @@
 							</label>
 							<input id="exp" name="exp" type="text">
 						</div>
+						<div class="hero-input">
+							<label for="online">
+								Был в сети
+							</label>
+							<input id="online" name="online" type="text">
+						</div>
 					</div>
 					<div class="right">
 						<div class="hero-input">
@@ -111,7 +117,13 @@
 							<label for="tel">
 								Телефон
 							</label>
-							<input id="tel" name="tel" type="text" placeholder="+7(***)***-**-**">
+							<input class="input-tel" id="tel" name="tel" type="text" placeholder="+7(***)***-**-**">
+						</div>
+						<div class="hero-input">
+							<label for="map">
+								Карта(ссылка src)
+							</label>
+							<input id="map" name="map" type="text">
 						</div>
 					</div>
 				</fieldset>

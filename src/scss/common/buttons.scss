@@ -1,7 +1,6 @@
 .button {
 	cursor: pointer;
 	background: transparent;
-	border: 1px solid $black;
 	border-radius: 5px;
 	padding: 5px 10px;
 	transition:
@@ -12,35 +11,67 @@
 		color: $white;
 		background-color: $black
 	}
+}
 
-	&.admin-edit-card.popup-button {
-		width: auto;
-		font-size: $fs-sm;
-		background: transparent;
-		border: 1px solid $black;
-		border-radius: 5px;
-		padding: 5px 10px;
-		margin-top: 0;
+.admin-delete-card, .admin-approve-card, .admin-edit-card {
+	width: auto;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 12px;
+	background-color: rgba(172, 47, 47, 0.6);
+	color: $white;
+	font-family: $ff;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: $fw-semibold;
+	line-height: normal;
+	border-radius: 10px;
+	width: 100%;
+	border: 0;
+	transition: background-color ease $tr;
+	margin-bottom: 24px;
+	max-width: 200px;
+	text-align: center;
 
-		&:hover {
-			color: $white;
-			background-color: $black
-		}
+	&:last-child {
+		margin-bottom: 0;
+		margin-right: 0;
+	}
+
+	&:hover {
+		background-color: $accent;
+		opacity: 1;
+	}
+
+	img {
+		margin-right: 10px;
+	}
+
+	@media all and (min-width: $md) {
+		margin-right: 20px;
+		margin-bottom: 0;
+	}
+
+	@media all and (min-width: $xl) {
+		width: 100%;
+		margin-bottom: 24px;
+		max-width: 100%;
+	}
+
+	@media all and (min-width: 1492px) {
+		height: 50px;
+		font-size: 22px;
 	}
 }
 
 .admin-approve-card {
-	margin-right: 10px
+	background-color: green;
 }
 
 .admin-delete-card {
-	background-color: $accent;
-	color: $white;
-	border-color: $accent;
-	transition: opacity ease-out $tr;
-
-	&:hover {
-		background-color: $accent;
-		opacity: 0.7
-	}
+	border: 2px solid $accent;
+	background-color: $white;
+	color: $accent;
 }

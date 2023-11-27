@@ -252,27 +252,9 @@ const generateCards = scrolling => {
 	if (!filteredData.length) structure = scrolling ? '' : 'Ничего не найдено'
 	else filteredData.forEach( card => structure += getCardStructure( card ) )
 
-	const showText = () => {
-		const hiddenTexts = document.querySelectorAll('.card-about')
-		const changeText = document.querySelector('.second.on')
-
-		hiddenTexts.forEach(text => {
-			text.addEventListener('click', () => {
-				if (!text.classList.contains('opened')) {
-					text.classList.add('opened')
-					changeText.innerHTML = "Скрыть"
-				} else {
-					text.classList.remove('opened')
-					changeText.innerHTML = "Показать"
-				}
-			})
-		})
-	}
-
 	if( scrolling ) results.innerHTML += structure
 	else results.innerHTML = structure
 
-	showText()
 	showPopup()
 	showCardPopup()
 	declineCard()
@@ -300,97 +282,129 @@ const generateCards = scrolling => {
  * @param arrive
  * @param workTime
  * @param days
+ * @param online
+ * @param map
  * @returns {string}	HTML structure of the card.
  */
-const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
+const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days, online, map } ) => {
 	const
 		isAdmin			= document.body.classList.contains( 'user-admin' ),
-		contactButton	= isAdmin ? '' : '<button class="card-button">Оставить заявку</button>',
-		deleteButton	= isAdmin ? '<button class="button admin-delete-card">Удалить</button>' : '',
-		editButton		= isAdmin ? '<button class="button admin-edit-card popup-button">Редактировать</button>' : ''
+		contactButton	= isAdmin ? '' : '<button class="card-button card-btn-style"><img src="img/cards/pen.svg" width="24" height="24" alt=""> Оставить заявку</button>',
+		deleteButton	= isAdmin ? '<button class="button card-btn-style admin-delete-card">Удалить</button>' : '',
+		editButton		= isAdmin ? '<button class="button admin-edit-card card-btn-style popup-button">Редактировать</button>' : ''
 
 	return `<li class="card" data-id="${ id }">
-		<div class="card-inner">
+		<div class="card-inner"> 
 			<div class="card-left">
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-name"><span class="first">ФИО:</span><span class="second">${name}</span>
-						</div>
-					</div>
-					<div class="card-col">
-						<div class="card-town"><span class="first">Город:</span><span class="second">${town}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-dist"><span class="first">Район:</span><span class="second">${dist}</span></div>
-					</div>
+				<div class="card-img">
+					<img class="card-avatar" src="${src}" width="240" height="240" alt="">
 				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-metro"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span>
-						</div>
-					</div>
-					<div class="card-col">
-						<div class="card-address"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
-					</div>
+				<div class="card-rate">
+					Рейтинг
+					<img src="img/cards/star.svg" width="30" height="30" alt="">
+					<span class="card-rating">${rate}</span>
 				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-skill"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-exp"><span class="first">Опыт:</span><span class="second">${exp}
-							</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-gar"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-arrive"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-worktime"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-days"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-about"><span class="first">Обо мне:</span><span
-								class="second on">Показать</span>
-							<div class="card-info">
-								<div class="card-info-inner">
-									${about}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card-col">
-						<a href="tel:${tel}" class="master-tel card-tel">
-							<span class="first">Телефон:</span><span class="second">${tel}</span>
-						</a>
-					</div>
-					<div class="card-col">
-						${ contactButton }
-						${ editButton }
-						${ deleteButton }
-					</div>
+				<div class="card-buttons">
+					<a class="card-phone card-btn-style card-tel" href="tel:${tel}">
+						<img src="img/cards/phone.svg" width="24" height="24" alt="">
+						${tel}
+					</a>
+					${ contactButton }
+					<button class="card-btn-style">
+						<img src="img/cards/thumbs.svg" width="24" height="24" alt="">
+						Оставить отзыв
+					</button>
+					${ editButton }
+					${ deleteButton }
 				</div>
 			</div>
-			<div class="card-photo">
-				<img class="card-avatar" src="${src}" width="300" height="300" alt="">
-				<p class="master-rate card-rate">
-					Рейтинг: <span>${rate}</span>
-					<img src="img/cards/star.png" width="15" height="15" alt="">
-				</p>
-				<p class="done card-done">
-					Выполнено работ: <span>${done}</span>
-				</p>
+			<div class="card-middle">
+				<div class="card-name">
+					${name}
+					<span class="card-online">был в сети ${online}</span>
+				</div>
+				<div class="card-verify">
+					<div class="card-verify-item">
+						<img src="img/cards/blue-check.svg" width="24" height="24" alt="">
+						документы проверены
+					</div>
+					<div class="card-verify-item">
+						<img src="img/cards/green-check.svg" width="24" height="24" alt="">
+						данные подтверждены
+					</div>
+				</div>
+				<div class="card-tech">
+					${tech}
+				</div>
+				<div class="card-about">
+					<div class="card-about-item">
+						<div class="card-about-title">
+							Оказано услуг
+						</div>
+						<div class="card-about-value">
+							<span class="card-done">
+								${done}
+							</span> 
+						</div>			
+					</div>
+					<div class="card-about-item">
+						<div class="card-about-title">
+							Опыт работы
+						</div>
+						<div class="card-about-value">
+							<span class="card-exp">${exp}</span> 
+						</div>			
+					</div>
+					<div class="card-about-item">
+						<div class="card-about-title">
+							Гарантия
+						</div>
+						<div class="card-about-value">
+							<span class="card-gar">${gar}</span>  
+						</div>			
+					</div>
+					<div class="card-about-item">
+						<div class="card-about-title">
+							Выезд на дом
+						</div>
+						<div class="card-about-value">
+							<span class="card-arrive"> ${arrive} </span>
+						</div>			
+					</div>
+				</div>
+				<div class="card-graph">
+					<div class="card-graph-item">
+						<img src="img/cards/date.svg" width="24" height="24" alt="">
+						<span class="card-days">${days}</span>, <span class="card-worktime">${workTime}</span> 
+					</div>
+					<div class="card-graph-item">
+						<img src="img/cards/home.svg" width="24" height="24" alt="">
+						<span class="card-address">${address}</span>
+					</div>
+				</div>
+				<div class="card-master-info">
+					<span class="card-about">${about}</span><span class="card-skill">${skill}</span>
+				</div>
+			</div>
+			<div class="card-right">
+				<div class="card-right-title">
+					Адрес и области выезда
+				</div>
+				<div class="card-right-map">
+					<iframe class="card-map"
+						src="${map}" width="560" height="400" frameborder="1"
+						allowfullscreen="true" style="position:relative;">
+					</iframe>
+				</div>
+				<div class="card-right-item">
+					Город <span class="card-town">${town}</span>
+				</div>
+				<div class="card-right-item">
+					Район <span class="card-dist">${dist}</span>
+				</div>
+				<div class="card-right-item">
+					Метро <span class="card-metro">${metro}</span>
+				</div> 
 			</div>
 		</div>
 	</li>`
@@ -509,7 +523,9 @@ const showEditCardPopup = () => {
 		formGar			= form.querySelector( 'input[name="gar"]' ),
 		formWorkTime	= form.querySelector( 'input[name="workTime"]' ),
 		formTel			= form.querySelector( 'input[name="tel"]' ),
-		formAbout		= form.querySelector( 'input[name="about"]' )
+		formAbout		= form.querySelector( 'input[name="about"]' ),
+		formOnline		= form.querySelector( 'input[name="online"]' ),
+		formMap			= form.querySelector( 'input[name="map"]' )
 
 	buttons.forEach( button => {
 		button.addEventListener( 'click', e => {
@@ -518,22 +534,24 @@ const showEditCardPopup = () => {
 			const
 				card			= button.closest( '.card' ),
 				cardId			= card.dataset.id || '',
-				cardFullName	= card.querySelector( '.card-name .second' ).innerHTML.trim(),
-				cardTown		= card.querySelector( '.card-town .second' ).innerHTML.trim(),
-				cardMetro		= card.querySelector( '.card-metro .second' ).innerHTML.trim(),
-				cardAddress		= card.querySelector( '.card-address .second' ).innerHTML.trim(),
-				cardTech		= card.querySelector( '.card-tech .second' ).innerHTML.trim(),
-				cardDist		= card.querySelector( '.card-dist .second' ).innerHTML.trim(),
-				cardSkill		= card.querySelector( '.card-skill .second' ).innerHTML.trim(),
-				cardExp			= card.querySelector( '.card-exp .second' ).innerHTML.trim(),
-				cardArrive		= card.querySelector( '.card-arrive .second' ).innerHTML.trim(),
-				cardDays		= card.querySelector( '.card-days .second' ).innerHTML.trim(),
-				cardGar			= card.querySelector( '.card-gar .second' ).innerHTML.trim(),
-				cardWorkTime	= card.querySelector( '.card-worktime .second' ).innerHTML.trim(),
-				cardTel			= card.querySelector( '.card-tel .second' ).innerHTML.trim(),
-				cardAbout		= card.querySelector( '.card-about .card-info-inner' ).innerHTML.trim(),
-				cardRate		= card.querySelector( '.card-rate span' ).innerHTML.trim(),
-				cardDone		= card.querySelector( '.card-done span' ).innerHTML.trim()
+				cardFullName	= card.querySelector( '.card-name' ).innerHTML.trim(),
+				cardTown		= card.querySelector( '.card-town' ).innerHTML.trim(),
+				cardMetro		= card.querySelector( '.card-metro' ).innerHTML.trim(),
+				cardAddress		= card.querySelector( '.card-address' ).innerHTML.trim(),
+				cardTech		= card.querySelector( '.card-tech' ).innerHTML.trim(),
+				cardDist		= card.querySelector( '.card-dist' ).innerHTML.trim(),
+				cardSkill		= card.querySelector( '.card-skill' ).innerHTML.trim(),
+				cardExp			= card.querySelector( '.card-exp' ).innerHTML.trim(),
+				cardArrive		= card.querySelector( '.card-arrive' ).innerHTML.trim(),
+				cardDays		= card.querySelector( '.card-days' ).innerHTML.trim(),
+				cardGar			= card.querySelector( '.card-gar' ).innerHTML.trim(),
+				cardWorkTime	= card.querySelector( '.card-worktime' ).innerHTML.trim(),
+				cardTel			= card.querySelector( '.card-tel' ).innerHTML.trim(),
+				cardAbout		= card.querySelector( '.card-master-info .card-about' ).innerHTML.trim(),
+				cardRate		= card.querySelector( '.card-rating' ).innerHTML.trim(),
+				cardDone		= card.querySelector( '.card-done' ).innerHTML.trim(),
+				online			= card.querySelector( '.card-online' ).innerHTML.trim(),
+				map				= card.querySelector( '.card-map' ).innerHTML.trim()
 
 			form.setAttribute( 'data-card', cardId )	// Add data-attr to know what card is in editing now.
 			form.querySelector( 'legend' ).innerHTML = 'Редактировать анкету'	// Change legend text.
@@ -543,6 +561,22 @@ const showEditCardPopup = () => {
 				form.querySelector( '.popup-left' ).insertAdjacentHTML(
 					'beforeend',
 					`<input class="form-input" name="rate" type="text" placeholder="Рейтинг" value="${ cardRate || '' }" />`
+				)
+			}
+
+			// Add map field.
+			if( ! form.querySelector( 'input[name="map"]' ) ){
+				form.querySelector( '.popup-left' ).insertAdjacentHTML(
+					'beforeend',
+					`<input class="form-input" name="map" type="text" placeholder="Src" value="${ map || '' }" />`
+				)
+			}
+
+			// Add online field.
+			if( ! form.querySelector( 'input[name="online"]' ) ){
+				form.querySelector( '.popup-left' ).insertAdjacentHTML(
+					'beforeend',
+					`<input class="form-input" name="online" type="text" placeholder="Src" value="${ online || '' }" />`
 				)
 			}
 
@@ -581,6 +615,10 @@ const showEditCardPopup = () => {
 			if( formTel && cardTel ) formTel.value = cardTel
 
 			if( formAbout && cardAbout ) formAbout.value = cardAbout
+
+			if( formOnline && online ) formOnline.value = online
+
+			if( formMap && map ) formOnline.value = map
 		} )
 	} )
 }

@@ -69,87 +69,111 @@ const generateCards = () => {
  */
 const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, address, about, done, tel, rate, exp, gar, arrive, workTime, days } ) => {
 	return `<li class="card" data-id="${ id }">
-		<div class="card-inner">
-			<div class="card-left">
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-name"><span class="first">ФИО:</span><span class="second">${name}</span>
-						</div>
-					</div>
-					<div class="card-col">
-						<div class="card-town"><span class="first">Город:</span><span class="second">${town}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-dist"><span class="first">Район:</span><span class="second">${dist}</span></div>
-					</div>
+	<div class="card-inner"> 
+		<div class="card-left">
+			<div class="card-img">
+				<img class="card-avatar" src="${src}" width="240" height="240" alt="">
+			</div>
+			<div class="card-rate">
+				Рейтинг
+				<img src="img/cards/star.svg" width="30" height="30" alt="">
+				<span>${rate}</span>
+			</div>
+			<div class="card-buttons">
+				<a class="card-phone card-btn-style" href="tel:${tel}">
+					<img src="img/cards/phone.svg" width="24" height="24" alt="">
+					${tel}
+				</a>
+				<button class="button admin-approve-card">Одобрить</button>
+				<button class="button admin-delete-card">Удалить</button>
+			</div>
+		</div>
+		<div class="card-middle">
+			<div class="card-name">
+				${name}
+				<span>был в сети ${online}</span>
+			</div>
+			<div class="card-verify">
+				<div class="card-verify-item">
+					<img src="img/cards/blue-check.svg" width="24" height="24" alt="">
+					документы проверены
 				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-metro"><span class="first">Метро:</span><span class="second">${metro || 'нет'}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-tech"><span class="first">Услуги:</span><span class="second">${tech}</span>
-						</div>
-					</div>
-					<div class="card-col">
-						<div class="card-address"><span class="first">Адрес проживания:</span><span class="second">${address}</span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-skill"><span class="first">Что умею делать:</span><span class="second">${skill}</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-exp"><span class="first">Опыт:</span><span class="second">${exp}
-							</span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-gar"><span class="first">Гарантия:</span><span class="second"> ${gar} </span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-arrive"><span class="first">Выезд:</span><span class="second"> ${arrive} </span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-worktime"><span class="first">Время работы:</span><span class="second">${workTime} </span></div>
-					</div>
-					<div class="card-col">
-						<div class="card-days"><span class="first">Дни работы:</span><span class="second"> ${days}</span></div>
-					</div>
-				</div>
-				<div class="card-row">
-					<div class="card-col">
-						<div class="card-about"><span class="first">Обо мне:</span><span
-								class="second on">Показать</span>
-							<div class="card-info">
-								<div class="card-info-inner">
-									${about}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="card-col">
-						<a href="tel:${tel}" class="card-tel master-tel">
-							<span class="first">Телефон:</span><span class="second">${tel}</span>
-						</a>
-					</div>
-					<div class="card-col">
-						<button class="button admin-approve-card">Одобрить</button>
-						<button class="button admin-delete-card">Удалить</button>
-					</div>
+				<div class="card-verify-item">
+					<img src="img/cards/green-check.svg" width="24" height="24" alt="">
+					данные подтверждены
 				</div>
 			</div>
-			<div class="card-photo">
-				<img class="card-avatar" src="${src}" width="300" height="300" alt="">
-				<p class="master-rate card-rate">
-					Рейтинг: <span>${rate}</span>
-					<img src="img/cards/star.png" width="15" height="15" alt="">
-				</p>
-				<p class="done card-done">
-					Выполнено работ: <span>${done}</span>
-				</p>
+			<div class="card-tech">
+				${tech}
 			</div>
+			<div class="card-about">
+				<div class="card-about-item">
+					<div class="card-about-title">
+						Оказано услуг
+					</div>
+					<div class="card-about-value">
+						${done}
+					</div>			
+				</div>
+				<div class="card-about-item">
+					<div class="card-about-title">
+						Опыт работы
+					</div>
+					<div class="card-about-value">
+						${exp} 
+					</div>			
+				</div>
+				<div class="card-about-item">
+					<div class="card-about-title">
+						Гарантия
+					</div>
+					<div class="card-about-value">
+						${gar} 
+					</div>			
+				</div>
+				<div class="card-about-item">
+					<div class="card-about-title">
+						Выезд на дом
+					</div>
+					<div class="card-about-value">
+						${arrive} 
+					</div>			
+			</div>
+			</div>
+			<div class="card-graph">
+				<div class="card-graph-item">
+					<img src="img/cards/date.svg" width="24" height="24" alt="">
+					${days}, ${workTime}
+				</div>
+				<div class="card-graph-item">
+					<img src="img/cards/home.svg" width="24" height="24" alt="">
+					${address}
+				</div>
+			</div>
+			<div class="card-master-info">
+				${about} ${skill}
+			</div>
+		</div>
+		<div class="card-right">
+			<div class="card-right-title">
+				Адрес и области выезда
+			</div>
+			<div class="card-right-map">
+				<iframe
+					src="${map}" width="560" height="400" frameborder="1"
+					allowfullscreen="true" style="position:relative;">
+				</iframe>
+			</div>
+			<div class="card-right-item">
+				Город <span>${town}</span>
+			</div>
+			<div class="card-right-item">
+				Район <span>${dist}</span>
+			</div>
+			<div class="card-right-item">
+				Метро <span>${metro}</span>
+			</div> 
+		</div>
 		</div>
 	</li>`
 }
