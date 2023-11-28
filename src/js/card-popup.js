@@ -6,6 +6,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	'use strict'
 
 	showCardPopup()
+	showRatePopup()
 } )
 
 export const showCardPopup = () => {
@@ -29,6 +30,32 @@ export const showCardPopup = () => {
 
 		if ( target.className && target.classList.contains( 'card-popup-wrapper' ) ) {
 			cardPopupWrapper.classList.remove( 'showed' )
+			enableBodyScroll( getTargetElement() )
+		}
+	} )
+}
+
+export const showRatePopup = () => {
+	const ratePopupWrapper    = document.querySelector( '.rate-popup' )
+	const ratePopButton       = document.querySelectorAll( '.callRate' )
+	setTargetElement( document.querySelector( '#rate-body-lock' ) )
+
+	if( ! ratePopupWrapper ) return
+
+	ratePopButton.forEach( button => {
+		button.addEventListener( 'click', () => {
+			ratePopupWrapper.classList.add( 'showed' )
+			disableBodyScroll( getTargetElement(), { reserveScrollBarGap: true } )
+		} )
+	} )
+
+	ratePopupWrapper.addEventListener( 'click', e => {
+		e.stopPropagation()
+
+		const target = e.target
+
+		if ( target.className && target.classList.contains( 'card-popup-wrapper' ) ) {
+			ratePopupWrapper.classList.remove( 'showed' )
 			enableBodyScroll( getTargetElement() )
 		}
 	} )

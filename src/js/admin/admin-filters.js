@@ -133,7 +133,7 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 				</div>
 				<div class="card-about-item">
 					<div class="card-about-title">
-						Выезд на дом
+						Выезд
 					</div>
 					<div class="card-about-value">
 						${arrive} 

@@ -1,5 +1,6 @@
 import { showPopup } from './popup'
 import { showCardPopup } from './card-popup'
+import { showRatePopup } from './card-popup'
 
 const STEP = 1
 let data = [],
@@ -257,6 +258,7 @@ const generateCards = scrolling => {
 
 	showPopup()
 	showCardPopup()
+	showRatePopup()
 	declineCard()
 	showEditCardPopup()
 }
@@ -310,7 +312,7 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 						${tel}
 					</a>
 					${ contactButton }
-					<button class="card-btn-style">
+					<button class="card-btn-style callRate">
 						<img src="img/cards/thumbs.svg" width="24" height="24" alt="">
 						Оставить отзыв
 					</button>
@@ -365,7 +367,7 @@ const getCardStructure = ( { id, town, dist, metro, tech, name, src, skill, addr
 					</div>
 					<div class="card-about-item">
 						<div class="card-about-title">
-							Выезд на дом
+							Выезд
 						</div>
 						<div class="card-about-value">
 							<span class="card-arrive"> ${arrive} </span>

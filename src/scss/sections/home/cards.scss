@@ -16,7 +16,7 @@
 	}
 
 	@media all and (min-width: $xl) {
-		padding: 50px 80px;
+		padding: 30px 50px;
 	}
 
 	&:last-child {
@@ -59,7 +59,7 @@
 		}
 
 		@media all and (min-width: $xl) {
-			max-width: 240px;
+			max-width: 200px;
 			margin-right: 40px;
 			align-items: flex-start;
 		}
@@ -75,6 +75,11 @@
 			height: 100%;
 			object-fit: cover;
 			border-radius: 10px;
+		}
+
+		@media all and (min-width: $xl) {
+			width: 200px;
+			height: 200px;
 		}
 	}
 
@@ -93,8 +98,8 @@
 			margin-left: 10px;
 		}
 
-		@media all and (min-width: 1492px) {
-			font-size: 30px;
+		@media all and (min-width: $xl) {
+			font-size: 22px;
 		}
 	}
 
@@ -132,7 +137,7 @@
 		border-radius: 10px;
 		width: 100%;
 		transition: background-color ease $tr;
-		margin-bottom: 24px;
+		margin-bottom: 10px;
 		max-width: 200px;
 
 		&:last-child {
@@ -156,13 +161,10 @@
 
 		@media all and (min-width: $xl) {
 			width: 100%;
-			margin-bottom: 24px;
 			max-width: 100%;
-		}
-
-		@media all and (min-width: 1492px) {
-			height: 50px;
-			font-size: 22px;
+			height: 40px;
+			font-size: 18px;
+			margin-bottom: 10px;
 		}
 	}
 
@@ -171,7 +173,7 @@
 		flex-direction: column;
 		align-items: flex-start;
 		width: 100%;
-		max-width: 720px;
+		max-width: 500px;
 		margin-top: 20px;
 		margin-bottom: 20px;
 
@@ -193,15 +195,12 @@
 		padding: 4px 20px;
 		border-radius: 5px;
 		background: #F3F3F3;
-
-		@media all and (min-width: 1492px) {
-			font-size: 20px;
-		}
 	}
 
 	&-name {
 		display: flex;
 		flex-direction: column;
+		justify-content: space-between;
 		color: #303030;
 		font-family: $ff;
 		font-size: 24px;
@@ -209,6 +208,7 @@
 		font-weight: $fw-medium;
 		line-height: normal;
 		margin-bottom: 16px;
+		width: 100%;
 
 		span {
 			color: #A3A3A3;
@@ -216,16 +216,20 @@
 			font-size: 16px;
 			font-style: normal;
 			font-weight: $fw-medium;
-			line-height: normal;
+			line-height: 1;
 			padding-bottom: 8px;
+			width: 50%;
 
-			@media all and (min-width: 1492px) {
-				margin-left: 24px;
+			@media all and (min-width: $xl) {
+				font-size: 14px;
+				margin-left: 20px;
+				padding-bottom: 5px;
+				padding-left: 5px;
 			}
 		}
 
-		@media all and (min-width: 1492px) {
-			font-size: 36px;
+		@media all and (min-width: $xl) {
+			font-size: 26px;
 			flex-direction: row;
 			align-items: flex-end;
 		}
@@ -260,9 +264,9 @@
 				margin-right: 10px;
 			}
 
-			@media all and (min-width: 1492px) {
-				font-size: 20px;
-				margin-right: 20px;
+			@media all and (min-width: $xl) {
+				font-size: 13px;
+				margin-right: 10px;
 				margin-bottom: 0;
 			}
 		}
@@ -300,8 +304,8 @@
 					border-right: 2px solid #CBCBCB;
 				}
 
-				@media all and (min-width: 1492px) {
-					padding-right: 30px;
+				@media all and (min-width: $xl) {
+					padding-right: 15px;
 				}
 			}
 
@@ -312,8 +316,8 @@
 					border-right: 2px solid #CBCBCB;
 				}
 
-				@media all and (min-width: 1492px) {
-					padding: 0 30px;
+				@media all and (min-width: $xl) {
+					padding: 0 15px;
 				}
 			}
 
@@ -324,16 +328,16 @@
 					border-right: 2px solid #CBCBCB;
 				}
 
-				@media all and (min-width: 1492px) {
-					padding: 0 30px;
+				@media all and (min-width: $xl) {
+					padding: 0 15px;
 				}
 			}
 
 			&:last-child {
 				padding-left: 10px;
 
-				@media all and (min-width: 1492px) {
-					padding-left: 30px;
+				@media all and (min-width: $xl) {
+					padding-left: 15px;
 				}
 			}
 		}
@@ -348,12 +352,8 @@
 			line-height: 1;
 			padding: 0 5px;
 
-			@media all and (min-width: 1492px) {
-				line-height: 30px;
-			}
-
-			@media all and (min-width: 1492px) {
-				font-size: 20px;
+			@media all and (min-width: $xl) {
+				line-height: 20px;
 			}
 		}
 
@@ -371,6 +371,7 @@
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 26px;
+		margin-top: 20px;
 
 		&-item {
 			display: flex;
@@ -394,9 +395,9 @@
 				line-height: 32px;
 			}
 
-			@media all and (min-width: 1492px) {
-				font-size: 20px;
-				margin-right: 36px;
+			@media all and (min-width: $xl) {
+				font-size: 16px;
+				margin-right: 20px;
 			}
 		}
 
@@ -414,8 +415,8 @@
 		line-height: 1;
 
 		@media all and (min-width: 1492px) {
-			font-size: 20px;
-			line-height: 30px;
+			font-size: 18px;
+			line-height: 20px;
 		}
 	}
 
@@ -448,9 +449,9 @@
 			line-height: 1;
 			margin-bottom: 26px;
 
-			@media all and (min-width: 1492px) {
+			@media all and (min-width: $xl) {
 				font-size: 26px;
-				line-height: 43px;
+				line-height: 1;
 			}
 		}
 
@@ -475,8 +476,9 @@
 				font-weight: $fw-medium;
 			}
 
-			@media all and (min-width: 1492px) {
-				font-size: 20px;
+			@media all and (min-width: $xl) {
+				font-size: 18px;
+				margin-bottom: 10px;
 			}
 		}
 	}
@@ -489,6 +491,7 @@
 		}
 
 		.card-btn-style {
+			cursor: pointer;
 			@media all and (min-width: $md) {
 				margin-right: 0;
 				margin-bottom: 24px;

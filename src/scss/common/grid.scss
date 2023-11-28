@@ -16,10 +16,6 @@
 		max-width: $container-xl
 	}
 
-	@media all and (min-width: $xxl) {
-		max-width: $container-xxl
-	}
-
 	&-fluid {
 		width: 100%;
 		max-width: 100%;

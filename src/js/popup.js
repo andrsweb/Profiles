@@ -5,13 +5,13 @@ import { setTargetElement, getTargetElement } from './common/global'
 document.addEventListener( 'DOMContentLoaded', () => {
 	'use strict'
 
-	showPopup()
+	showPopup('.popup-wrapper', '.popup-button','#body-lock' )
 } )
 
-export const showPopup = () => {
-	const popupWrapper    = document.querySelector( '.popup-wrapper' )
-	const popButton       = document.querySelectorAll( '.popup-button' )
-	setTargetElement( document.querySelector( '#body-lock' ) )
+export const showPopup = (wrapper, btn, lock) => {
+	const popupWrapper    = document.querySelector( wrapper )
+	const popButton       = document.querySelectorAll( btn )
+	setTargetElement( document.querySelector( lock ) )
 
 	if( ! popupWrapper ) return
 

@@ -42,6 +42,10 @@ if( ! empty( $_POST ) && isset( $_POST['func'] ) ){
 			as_send_card_form();
 			break;
 
+			case 'rate-form':
+				as_send_rate_form();
+				break;
+
 		case 'approve-card':
 			approve_card();
 			break;
@@ -440,6 +444,23 @@ function as_send_card_form(){
 		"ФИО - $name\n" .
 		"Почта - $email\n" .
 		"Телефон - $tel\n\n\n";
+
+	as_send_email( 'Заявка', $message );
+}
+
+function as_send_rate_form(){
+	$name	= isset( $_POST['name'] ) ? as_clean_value( $_POST['name'] ) : null;
+	$email	= isset( $_POST['email'] ) ? as_clean_value( $_POST['email'] ) : null;
+	$tel	= isset( $_POST['tel'] ) ? as_clean_value( $_POST['tel'] ) : null;
+	$text	= isset( $_POST['text'] ) ? as_clean_value( $_POST['tel'] ) : null;
+
+	// Prepare message for mail.
+	$message = "Привет!\n" .
+		"Отзыв о мастере:\n\n" .
+		"ФИО - $name\n" .
+		"Почта - $email\n" .
+		"Телефон - $tel\n" .
+		"Отзыв - $text\n\n\n";
 
 	as_send_email( 'Заявка', $message );
 }

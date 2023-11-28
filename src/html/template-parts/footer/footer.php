@@ -77,6 +77,7 @@
 	<?php
 	require_once 'popup.php';
 	require_once 'card-form.php';
+	require_once 'rate-form.php';
 	?>
 </body>
 </html>
