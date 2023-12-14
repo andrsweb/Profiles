@@ -63,8 +63,11 @@
 							<a class="header-tel" href="tel:+7999999999">+7(999) 999-999</a>
 						</div>
 						<div class="col col-img">
-							<img class="up" src="img/header/up.png" width="50" height="50" alt="">
-							Вверх
+							<div class="footer__requisites">
+								ИП Бельченко Алексей Владимирович <br>
+								ОГРНИП 323784700028964 <br>
+								ИНН 780540583029
+							</div>
 						</div>
 					</div>
 				</div>
